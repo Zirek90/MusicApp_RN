@@ -9,17 +9,28 @@ import {
   BackgroundProvider,
 } from '@context';
 import { ThemeConfig } from '@configs';
+import { useEffect } from 'react';
 
 export const unstable_settings = {
   initialRouteName: '(tabs)',
 };
 
+SplashScreen.preventAutoHideAsync();
+
 export default function RootLayout() {
-  const [loaded] = useFonts({
+  const [loaded, error] = useFonts({
     Kegina: require('../assets/fonts/Kegina.otf'),
   });
 
-  if (!loaded) return <SplashScreen />;
+  useEffect(() => {
+    if (loaded || error) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded, error]);
+
+  if (!loaded && !error) {
+    return null;
+  }
 
   return (
     <BackgroundProvider>

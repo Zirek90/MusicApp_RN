@@ -46,7 +46,7 @@ export default function TabLayout() {
           ),
         }}
         listeners={{
-          tabPress: (e: Event) => {
+          tabPress: e => {
             e.preventDefault();
           },
         }}

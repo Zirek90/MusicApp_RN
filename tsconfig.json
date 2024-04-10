@@ -30,5 +30,6 @@
       "@service": ["./src/service"]
     }
   },
-  "exclude": ["node_modules", "babel.config.js"]
+  "exclude": ["node_modules", "babel.config.js"],
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }

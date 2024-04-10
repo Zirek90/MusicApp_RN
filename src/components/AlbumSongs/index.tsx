@@ -11,7 +11,7 @@ export const AlbumSongs = () => {
   const albumSource = activeAlbum || currentlyPlayedAlbum;
 
   const getSongLayout = useCallback(
-    (_data: Asset[] | null | undefined, index: number) => ({
+    (_data: ArrayLike<Asset> | null | undefined, index: number) => ({
       length: SONG_HEIGHT,
       offset: SONG_HEIGHT * index,
       index,
