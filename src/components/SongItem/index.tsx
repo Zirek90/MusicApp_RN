@@ -1,28 +1,31 @@
-import { Box } from 'native-base';
 import { Asset } from 'expo-media-library';
-import { COLORS } from '@global';
 import { SongItemProgress } from '../SongItemProgress';
 import { SongItemControllers } from '../SongItemControllers';
 import { withMusicContext } from '@hoc';
 import { SongItemInformation } from '../SongItemInformation';
+import { AnimatedBox } from '../../animationUtils/animatedComponents';
+import { useChangeBackgroundAnimation } from 'src/animationUtils';
 
 type SongItemProps = {
   data: Asset;
   index: number;
   id: string;
 };
+
 const SongItemComponent = ({ data, index, id }: SongItemProps) => {
   const sameId = id === data.id;
+  const { bgColor, animatedStyle } = useChangeBackgroundAnimation({ sameId });
 
   return (
-    <Box
+    <AnimatedBox
       mx={3}
       p={1}
       h={45}
       flexDirection="row"
       justifyContent="space-between"
       alignItems="center"
-      bgColor={sameId ? COLORS.background_content_secondary : COLORS.background_content_primary}
+      bgColor={bgColor}
+      style={animatedStyle}
       borderColor="gray.600"
       borderBottomWidth={2}>
       {sameId && <SongItemProgress />}
@@ -30,7 +33,7 @@ const SongItemComponent = ({ data, index, id }: SongItemProps) => {
       <SongItemInformation data={data} />
 
       <SongItemControllers data={data} index={index} />
-    </Box>
+    </AnimatedBox>
   );
 };
 

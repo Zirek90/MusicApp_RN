@@ -9,3 +9,5 @@ export { SongProgress } from './SongProgress';
 export { PlayerControllers } from './PlayerControllers';
 export { AlbumTitles } from './AlbumTitles';
 export { AlbumSongs } from './AlbumSongs';
+export { PlayerStatusBox } from './PlayerStatusBox';
+export { MusicPlayerPlayingGif } from './MusicPlayerPlayingGif';
