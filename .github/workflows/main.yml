@@ -38,7 +38,7 @@ jobs:
         run: npm run prebuild
 
       - name: Update android manifest
-        run: node node_modules/@supersami/rn-foreground-service/postinstall.js
+        run: node postinstall.js
 
       - name: Publish update
         run: eas build --platform android --profile preview_apk --non-interactive
