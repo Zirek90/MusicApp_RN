@@ -32,28 +32,39 @@ const SongItemControllersComponent = ({
   songStatus,
 }: SongItemControllersProps) => {
   const sameId = id === data.id;
+  const isPauseActive = sameId && songStatus === SongStatus.PAUSE;
+  const isPlayingActive = sameId && songStatus === SongStatus.PLAY;
 
   const handlePlaySong = () => {
     handlePlay(SongStatus.PLAY, data.id, data.filename, data.uri, data.duration, index);
   };
 
-  return (
-    <HStack>
-      {!id ||
-        (sameId && (
-          <>
-            {songStatus !== SongStatus.PAUSE && (
-              <PressableController color={COLORS.hold} name="pause" handleAction={handlePause} />
-            )}
-
-            <PressableController color={COLORS.active} name="play" handleAction={handleResume} />
-          </>
-        ))}
-      {!sameId && (
+  const handleContent = () => {
+    if (sameId) {
+      return (
+        <>
+          {songStatus && (
+            <PressableController
+              color={isPauseActive ? COLORS.hold : COLORS.inactive}
+              name="pause"
+              handleAction={handlePause}
+            />
+          )}
+          <PressableController
+            color={isPlayingActive ? COLORS.active : COLORS.inactive}
+            name="play"
+            handleAction={handleResume}
+          />
+        </>
+      );
+    } else {
+      return (
         <PressableController color={COLORS.inactive} name="play" handleAction={handlePlaySong} />
-      )}
-    </HStack>
-  );
+      );
+    }
+  };
+
+  return <HStack>{handleContent()}</HStack>;
 };
 
 export const SongItemControllers = withMusicContext(SongItemControllersComponent, {

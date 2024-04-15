@@ -166,7 +166,7 @@ export const MusicContextProvider = ({ children }: PropsWithChildren) => {
 
   const manageStorage = useCallback(async () => {
     await StorageService.set('album', currentlyPlayedAlbum!);
-    await StorageService.set('currentSong', currentSong);
+    await StorageService.set('currentSong', { ...currentSong, songStatus: null });
   }, [currentlyPlayedAlbum, currentSong]);
 
   useEffect(() => {
