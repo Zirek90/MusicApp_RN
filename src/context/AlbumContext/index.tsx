@@ -55,17 +55,17 @@ export const AlbumsContextProvider = ({ children }: PropsWithChildren) => {
   const assignFilesToDirectories = (files: MediaLibrary.Asset[]) => {
     return files.reduce((acc: Album[], file) => {
       const directory = getDirectory(file.uri);
-      const foundDirectory = acc.find(a => a.album === directory);
+      const foundDirectory = acc.find(d => d.album === directory);
 
       if (foundDirectory) {
-        return acc.map(el => {
-          if (el.album === directory) {
+        return acc.map(item => {
+          if (item.album === directory) {
             return {
-              ...el,
-              items: [...el.items, file],
+              ...item,
+              items: [...item.items, file],
             };
           }
-          return el;
+          return item;
         });
       }
       return [
@@ -87,6 +87,11 @@ export const AlbumsContextProvider = ({ children }: PropsWithChildren) => {
   }, []);
 
   useEffect(() => {
+    if (!permissionGranted) return;
+    scanMusicFiles();
+  }, [permissionGranted]);
+
+  useEffect(() => {
     const fetchStoredAlbum = async () => {
       const { album } = await StorageService.getAll();
       if (!album) return;
@@ -94,11 +99,6 @@ export const AlbumsContextProvider = ({ children }: PropsWithChildren) => {
     };
     fetchStoredAlbum();
   }, []);
-
-  useEffect(() => {
-    if (!permissionGranted) return;
-    scanMusicFiles();
-  }, [permissionGranted]);
 
   useEffect(() => {
     const enableAudio = async () => {

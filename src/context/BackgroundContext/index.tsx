@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react';
+import { PropsWithChildren, createContext, useContext, useMemo } from 'react';
 import { ImageSourcePropType } from 'react-native';
 import { DARK_BG_PATHS } from '@global';
 
@@ -11,12 +11,11 @@ const BackgroundContext = createContext<BackgroundProviderState>({
 });
 
 export const BackgroundProvider = ({ children }: PropsWithChildren) => {
-  const [background, setBackground] = useState<ImageSourcePropType>(
-    require('../../assets/backgrounds/black_bg_1.png'),
-  );
-
-  useEffect(() => {
-    setBackground(DARK_BG_PATHS[Math.floor(Math.random() * DARK_BG_PATHS.length)].path);
+  const background = useMemo(() => {
+    return (
+      DARK_BG_PATHS[Math.floor(Math.random() * DARK_BG_PATHS.length)].path ||
+      require('../../assets/backgrounds/black_bg_1.png')
+    );
   }, []);
 
   return <BackgroundContext.Provider value={{ background }}>{children}</BackgroundContext.Provider>;
