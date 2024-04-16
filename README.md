@@ -3,8 +3,7 @@
 ## FOR ANDROID
 
 1. npm run prebuild
-2. node postinstall.js
-3. npm run:android
+2. npm run:android
 
 In postinstall we can change colors of foreground service if we wish
 
@@ -22,4 +21,4 @@ inside NotificationBuilder.java create color for R.drawable.redbox_top_border_ba
 
 # Alternatively to postinstall, we can find config of supersami foreground-service here however it might miss certein parts:
 
-- node_modules/@supersami/rn-foreground-service/postinstall.js
+- node node_modules/@supersami/rn-foreground-service/postinstall.js

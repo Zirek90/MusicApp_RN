@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 const metadataTemplate = `
   <meta-data
@@ -58,4 +59,27 @@ fs.writeFile(colorFilePath, colorTemplate, 'utf8', function (err) {
   }
 
   console.log(`Successfully created color file at ${colorFilePath}`);
+});
+
+const drawableSupersamiResource = `<?xml version="1.0" encoding="utf-8"?>
+  <resources>
+      <drawable name="redbox_top_border_background">#161923</drawable>
+  </resources>
+`;
+
+const drawableSupersamiResourceFilePath = `${process.cwd()}/node_modules/@supersami/rn-foreground-service/android/src/main/res/values/`;
+
+// Create the directory synchronously if it doesn't exist
+if (!fs.existsSync(drawableSupersamiResourceFilePath)) {
+  fs.mkdirSync(drawableSupersamiResourceFilePath, { recursive: true });
+}
+
+const fileName = path.join(drawableSupersamiResourceFilePath, 'refs.xml');
+
+fs.writeFileSync(fileName, drawableSupersamiResource, 'utf8', function (err) {
+  if (err) {
+    return console.log(err);
+  }
+
+  console.log(`Successfully created drawable supersami resource file at ${colorFilePath}`);
 });
