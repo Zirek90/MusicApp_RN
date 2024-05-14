@@ -7,6 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "music-player",
     "userInterfaceStyle": "automatic",
+    "runtimeVersion": "1.0.0",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "cover",
@@ -37,9 +38,6 @@
     "plugins": ["expo-build-properties", "expo-router", "expo-font"],
     "experiments": {
       "typedRoutes": true
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
     },
     "updates": {
       "url": "https://u.expo.dev/a019001b-713f-4f76-9caf-284f6cf2a1af"
