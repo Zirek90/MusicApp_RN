@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "music-player",
+    "name": "Music Player",
     "slug": "music-player",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,7 +22,8 @@
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.zirek.musicplayer"
+      "package": "com.zirek.musicplayer",
+      "versionCode": 1
     },
     "web": {
       "bundler": "metro",

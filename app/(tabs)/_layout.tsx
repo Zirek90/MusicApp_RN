@@ -38,17 +38,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="playlist"
+        name="settings"
         options={{
-          title: 'Playlists',
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="bookmark-music" color={color} opacity={0.5} />
-          ),
-        }}
-        listeners={{
-          tabPress: e => {
-            e.preventDefault();
-          },
+          title: 'Settings',
+          tabBarIcon: ({ color }) => <TabBarIcon name="heart-settings" color={color} />,
         }}
       />
     </Tabs>
