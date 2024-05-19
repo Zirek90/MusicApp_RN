@@ -22,11 +22,11 @@ export const MusicService = {
           const totalDuration = status.durationMillis! / 1000;
           const currentPosition = status.positionMillis / 1000;
           const timeLeft = calculateProgress(totalDuration, currentPosition);
+
           setProgress(timeLeft);
           StorageService.set('songProgress', timeLeft);
 
-          if (status.didJustFinish) {
-            if (status.isLooping) return;
+          if (status.didJustFinish && !status.isLooping) {
             setCurrentSong(prev => ({ ...prev, isSongDone: true }));
           }
         }

@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Box, FlatList, Heading, Text } from 'native-base';
+import { Box, FlatList, Heading } from 'native-base';
 import { Asset } from 'expo-media-library';
 import { SongItem } from '../SongItem';
 import { useAlbumsContext } from '@context';

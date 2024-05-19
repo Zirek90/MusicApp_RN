@@ -15,6 +15,7 @@ export const useSlideUpAndDownAnimation = ({ status }: useSlideUpAndDownAnimatio
     } else {
       height.value = withTiming(40, { duration: 1000, easing: Easing.linear });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   return height;

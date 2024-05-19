@@ -12,7 +12,7 @@ type MusicPlayerHeaderProps = {
 };
 
 const MusicPlayerHeaderComponent = ({ songDetails }: MusicPlayerHeaderProps) => {
-  const avatarImage = useMemo(() => chooseAvatarImage(), [songDetails]);
+  const avatarImage = useMemo(() => chooseAvatarImage(), []);
 
   return (
     <HStack alignItems="center">

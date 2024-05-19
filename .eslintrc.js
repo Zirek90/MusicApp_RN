@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   extends: ['universe/native', 'prettier'],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'react-hooks'],
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
@@ -12,6 +12,8 @@ module.exports = {
         'no-undef': 'off',
         'import/order': 'off',
         'no-case-declarations': 'off',
+        'react-hooks/rules-of-hooks': 'error',
+        'react-hooks/exhaustive-deps': 'warn',
       },
     },
   ],

@@ -19,6 +19,7 @@ export const useChangeBackgroundAnimation = ({ sameId }: useChangeBackgroundAnim
     return () => {
       bgColor.value = COLORS.background_content_secondary;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sameId]);
 
   const animatedStyle = useAnimatedProps(() => ({

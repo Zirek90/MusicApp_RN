@@ -31,7 +31,7 @@ export const AlbumsContextProvider = ({ children }: PropsWithChildren) => {
 
   const { permissionGranted } = usePermissionContext();
 
-  const handleMusicAssets = async () => {
+  const handleMusicAssets = useCallback(async () => {
     let media = await MediaLibrary.getAssetsAsync({
       mediaType: MediaLibrary.MediaType.audio,
     });
@@ -52,7 +52,7 @@ export const AlbumsContextProvider = ({ children }: PropsWithChildren) => {
     const assignedMusicFiles = assignFilesToDirectories(sortFiles);
 
     setAlbumList(assignedMusicFiles);
-  };
+  }, []);
 
   const assignFilesToDirectories = (files: MediaLibrary.Asset[]) => {
     return files.reduce((acc: Album[], file) => {
@@ -91,7 +91,7 @@ export const AlbumsContextProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     if (!permissionGranted) return;
     handleMusicAssets();
-  }, [permissionGranted]);
+  }, [permissionGranted, handleMusicAssets]);
 
   useEffect(() => {
     const fetchStoredAlbum = async () => {

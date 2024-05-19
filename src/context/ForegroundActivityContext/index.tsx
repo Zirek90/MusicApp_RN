@@ -30,7 +30,7 @@ export const ForeroundActivityProvider = ({ children }: PropsWithChildren) => {
     if (AppState.currentState === 'background') {
       ForewardService.updateTask(activeSong.filename);
     }
-  }, [activeAlbum, index]);
+  }, [activeAlbum, index, songStatus]);
 
   useEffect(() => {
     const appStateListener = AppState.addEventListener('change', nextAppState => {

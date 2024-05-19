@@ -80,12 +80,17 @@ export const MusicContextProvider = ({ children }: PropsWithChildren) => {
 
       setCurrentSong(prev => ({ ...prev, id, filename, duration, songStatus, index }));
       setSong(sound);
-
       if (activeAlbum && activeAlbum?.album !== currentlyPlayedAlbum?.album) {
         handleCurrentlyPlayedAlbum(activeAlbum);
       }
     },
-    [song, currentSong.duration],
+    [
+      song,
+      currentSong.duration,
+      activeAlbum,
+      handleCurrentlyPlayedAlbum,
+      currentlyPlayedAlbum?.album,
+    ],
   );
 
   const handleResume = useCallback(async () => {
@@ -108,7 +113,7 @@ export const MusicContextProvider = ({ children }: PropsWithChildren) => {
       currentSong.index,
       true,
     );
-  }, [song, currentlyPlayedAlbum, currentSong.index]);
+  }, [song, currentlyPlayedAlbum, currentSong.index, handlePlay]);
 
   const handlePause = useCallback(async () => {
     if (!song) return;
@@ -136,7 +141,7 @@ export const MusicContextProvider = ({ children }: PropsWithChildren) => {
 
     const { id, filename, uri, duration } = previousSong;
     await handlePlay(SongStatus.PLAY, id, filename, uri, duration, previousIndex);
-  }, [currentlyPlayedAlbum, currentSong, handlePlay]);
+  }, [currentlyPlayedAlbum, currentSong, handlePlay, handleLoop]);
 
   const handleNext = useCallback(async () => {
     if (!currentlyPlayedAlbum) return;
@@ -152,10 +157,11 @@ export const MusicContextProvider = ({ children }: PropsWithChildren) => {
 
     const { id, filename, uri, duration } = nextSong;
     await handlePlay(SongStatus.PLAY, id, filename, uri, duration, nextIndex);
-  }, [currentlyPlayedAlbum, currentSong, handlePlay]);
+  }, [currentlyPlayedAlbum, currentSong, handlePlay, handleLoop]);
 
   const handleSongProgress = useCallback(
     async (progress: number) => {
+      console.log({ progress });
       if (song) {
         const currentPositon = calculateSongPosition(progress, currentSong.duration);
         await song.setPositionAsync(currentPositon);
@@ -172,7 +178,7 @@ export const MusicContextProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     if (!currentSong.isSongDone) return;
     handleNext();
-  }, [currentSong.isSongDone]);
+  }, [currentSong.isSongDone, handleNext]);
 
   useEffect(() => {
     if (!currentlyPlayedAlbum) return;
@@ -191,7 +197,7 @@ export const MusicContextProvider = ({ children }: PropsWithChildren) => {
       album: currentlyPlayedAlbum.album,
     });
     manageStorage();
-  }, [currentlyPlayedAlbum, currentSong.index]);
+  }, [currentlyPlayedAlbum, currentSong, manageStorage]);
 
   useEffect(() => {
     const fetchStoredIndex = async () => {
