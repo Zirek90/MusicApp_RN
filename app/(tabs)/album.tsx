@@ -1,10 +1,10 @@
-import { BackgroundWrapper } from '@components';
-import { AlbumList } from '@screens';
+import { AlbumSongs, AlbumTitles, BackgroundWrapper } from '@components';
 
 const Album = () => {
   return (
     <BackgroundWrapper>
-      <AlbumList />
+      <AlbumTitles />
+      <AlbumSongs />
     </BackgroundWrapper>
   );
 };

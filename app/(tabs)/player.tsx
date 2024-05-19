@@ -1,10 +1,26 @@
-import { BackgroundWrapper } from '@components';
-import { MusicPlayer } from '@screens';
+import {
+  BackgroundWrapper,
+  MusicPlayerHeader,
+  MusicPlayerPlayingGif,
+  PlayerControllers,
+  PlayerStatusBox,
+  SongProgress,
+} from '@components';
+import { COLORS } from '@global';
+import { Box } from 'native-base';
 
 const Player = () => {
   return (
     <BackgroundWrapper>
-      <MusicPlayer />
+      <Box borderRadius={10} position="absolute" bottom={0} right={2} left={2}>
+        <MusicPlayerPlayingGif />
+        <PlayerStatusBox />
+        <Box bgColor={COLORS.background_primary} p={1}>
+          <MusicPlayerHeader />
+          <SongProgress />
+          <PlayerControllers />
+        </Box>
+      </Box>
     </BackgroundWrapper>
   );
 };
