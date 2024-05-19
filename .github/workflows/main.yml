@@ -3,7 +3,7 @@ name: Generate apk build
 on:
   push:
     branches:
-      - development
+      - main
 
 jobs:
   update:

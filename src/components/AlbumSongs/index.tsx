@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Box, FlatList, Text } from 'native-base';
+import { Box, FlatList, Heading, Text } from 'native-base';
 import { Asset } from 'expo-media-library';
 import { SongItem } from '../SongItem';
 import { useAlbumsContext } from '@context';
@@ -30,9 +30,7 @@ export const AlbumSongs = () => {
 
   return (
     <Box flex={1}>
-      <Text fontSize="2xl" my={3}>
-        {albumSource.album}
-      </Text>
+      <Heading my={3}>{albumSource.album}</Heading>
       <FlatList
         data={albumSource.items}
         keyExtractor={songKeyExtractor}

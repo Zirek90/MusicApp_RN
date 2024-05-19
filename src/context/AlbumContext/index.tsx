@@ -31,7 +31,7 @@ export const AlbumsContextProvider = ({ children }: PropsWithChildren) => {
 
   const { permissionGranted } = usePermissionContext();
 
-  const scanMusicFiles = async () => {
+  const handleMusicAssets = async () => {
     let media = await MediaLibrary.getAssetsAsync({
       mediaType: MediaLibrary.MediaType.audio,
     });
@@ -47,7 +47,9 @@ export const AlbumsContextProvider = ({ children }: PropsWithChildren) => {
         AVAILABLE_EXTENSIONS.includes(getExtension(file.filename)),
     );
 
-    const assignedMusicFiles = assignFilesToDirectories(filterWrongFiles);
+    const sortFiles = filterWrongFiles.sort((a, b) => a.filename.localeCompare(b.filename));
+
+    const assignedMusicFiles = assignFilesToDirectories(sortFiles);
 
     setAlbumList(assignedMusicFiles);
   };
@@ -88,7 +90,7 @@ export const AlbumsContextProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     if (!permissionGranted) return;
-    scanMusicFiles();
+    handleMusicAssets();
   }, [permissionGranted]);
 
   useEffect(() => {
