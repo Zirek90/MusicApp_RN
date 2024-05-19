@@ -16,6 +16,7 @@ export const ThemeConfig = extendTheme({
         return {
           color: COLORS.white,
           fontFamily: 'Kegina',
+          fontSize: 20,
         };
       },
     },

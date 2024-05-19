@@ -29,7 +29,7 @@ export const AlbumSongs = () => {
   if (!albumSource) return null;
 
   return (
-    <Box>
+    <Box flex={1}>
       <Text fontSize="2xl" my={3}>
         {albumSource.album}
       </Text>

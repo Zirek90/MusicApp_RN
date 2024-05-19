@@ -3,7 +3,7 @@ import { AlbumSongs, AlbumTitles } from '@components';
 
 export const AlbumList = () => {
   return (
-    <Box>
+    <Box flex={1}>
       <AlbumTitles />
       <AlbumSongs />
     </Box>
