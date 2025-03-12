@@ -4,7 +4,7 @@ import { SplashScreen, Stack } from 'expo-router';
 import { NativeBaseProvider } from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeConfig } from '@configs';
-import { PermissionContextProvider, ForeroundActivityProvider, BackgroundProvider } from '@context';
+import { PermissionContextProvider, BackgroundProvider } from '@context';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -35,11 +35,9 @@ export default function RootLayoutNav() {
     <SafeAreaProvider>
       <BackgroundProvider>
         <PermissionContextProvider>
-          <ForeroundActivityProvider>
-            <NativeBaseProvider theme={ThemeConfig}>
-              <InitialPage />
-            </NativeBaseProvider>
-          </ForeroundActivityProvider>
+          <NativeBaseProvider theme={ThemeConfig}>
+            <InitialPage />
+          </NativeBaseProvider>
         </PermissionContextProvider>
       </BackgroundProvider>
     </SafeAreaProvider>

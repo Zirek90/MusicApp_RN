@@ -18,7 +18,7 @@ export function SongHeader(props: SongHeaderProps) {
     <View style={styles.header}>
       <MaterialIcons name="music-note" size={20} color="white" />
       <Text numberOfLines={1} ellipsizeMode="tail" style={styles.headerText}>
-        {selectedAlbum?.album}
+        {selectedAlbum?.albumName}
       </Text>
     </View>
   );
