@@ -1,5 +1,5 @@
-import { create } from 'zustand';
 import { Audio } from 'expo-av';
+import { create } from 'zustand';
 import { SongStatus } from '@enums';
 import { MusicService } from '@service';
 

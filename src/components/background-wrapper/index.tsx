@@ -1,10 +1,10 @@
 import { PropsWithChildren } from 'react';
 import { View, Box } from 'native-base';
 import { ImageBackground } from 'react-native';
-import { COLORS } from '@global';
 import { useBackgroundContext } from '@context';
+import { COLORS } from '@global';
 
-export const BackgroundWrapper = ({ children }: PropsWithChildren) => {
+export function BackgroundWrapper({ children }: PropsWithChildren) {
   const { background } = useBackgroundContext();
 
   return (
@@ -22,4 +22,4 @@ export const BackgroundWrapper = ({ children }: PropsWithChildren) => {
       </ImageBackground>
     </View>
   );
-};
+}

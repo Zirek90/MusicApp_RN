@@ -1,10 +1,10 @@
-import { SplashScreen, Stack } from 'expo-router';
-import { useFonts } from 'expo-font';
-import { NativeBaseProvider } from 'native-base';
-import { PermissionContextProvider, ForeroundActivityProvider, BackgroundProvider } from '@context';
-import { ThemeConfig } from '@configs';
 import { useEffect } from 'react';
+import { useFonts } from 'expo-font';
+import { SplashScreen, Stack } from 'expo-router';
+import { NativeBaseProvider } from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ThemeConfig } from '@configs';
+import { PermissionContextProvider, ForeroundActivityProvider, BackgroundProvider } from '@context';
 
 SplashScreen.preventAutoHideAsync();
 
