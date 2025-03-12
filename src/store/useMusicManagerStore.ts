@@ -2,19 +2,24 @@ import { create } from 'zustand';
 import { useAlbumStore } from './useAlbumStore';
 import { useMusicPlayerStore } from './useMusicStore';
 import { SongStatus } from '@enums';
+import { Album } from '@types';
 
-interface MusicManagerStore {
-  activeAlbum: string | null;
-  playSong: (albumName: string, songIndex: number) => void;
+export interface MusicManagerStore {
+  activeAlbumId: string | null;
+  playSong: (albumId: Album['albumId'], songIndex: number) => void;
   nextSong: () => void;
   previousSong: () => void;
+  isFirst: boolean;
+  isLast: boolean;
 }
 
 export const useMusicManagerStore = create<MusicManagerStore>((set, get) => ({
-  activeAlbum: null,
+  activeAlbumId: null,
+  isFirst: false,
+  isLast: false,
 
-  playSong: (albumName, songIndex) => {
-    const album = useAlbumStore.getState().albumList.find(a => a.album === albumName);
+  playSong: (albumId, songIndex) => {
+    const album = useAlbumStore.getState().albumList.find(a => a.albumId === albumId);
     if (!album) return;
 
     const song = album.items[songIndex];
@@ -22,41 +27,47 @@ export const useMusicManagerStore = create<MusicManagerStore>((set, get) => ({
 
     useMusicPlayerStore.getState().handlePlay(
       {
-        id: song.id,
-        filename: song.filename,
+        ...song,
         songStatus: SongStatus.PLAY,
-        duration: song.duration,
         index: songIndex,
+        isPlaying: true,
+        albumName: album.albumName,
       },
       song.uri,
     );
 
-    set({ activeAlbum: albumName });
+    set({
+      activeAlbumId: album.albumId,
+      isFirst: songIndex === 0,
+      isLast: songIndex === album.items.length - 1,
+    });
   },
-
   nextSong: () => {
-    const { activeAlbum, playSong } = get();
-    if (!activeAlbum) return;
+    const { playSong, activeAlbumId } = get();
+    if (!activeAlbumId) return;
+    const currentSong = useMusicPlayerStore.getState().currentSong;
+    if (!currentSong) return;
 
-    const album = useAlbumStore.getState().albumList.find(a => a.album === activeAlbum);
+    const album = useAlbumStore.getState().albumList.find(a => a.albumId === activeAlbumId);
     if (!album) return;
 
-    const currentIndex = useMusicPlayerStore.getState().currentSong?.index || 0;
-    const nextIndex = (currentIndex + 1) % album.items.length;
+    const currentIndex = currentSong.index;
+    const nextIndex = currentIndex + 1;
 
-    playSong(activeAlbum, nextIndex);
+    playSong(album.albumId, nextIndex);
   },
-
   previousSong: () => {
-    const { activeAlbum, playSong } = get();
-    if (!activeAlbum) return;
+    const { activeAlbumId, playSong } = get();
+    if (!activeAlbumId) return;
+    const currentSong = useMusicPlayerStore.getState().currentSong;
+    if (!currentSong) return;
 
-    const album = useAlbumStore.getState().albumList.find(a => a.album === activeAlbum);
+    const album = useAlbumStore.getState().albumList.find(a => a.albumId === activeAlbumId);
     if (!album) return;
 
-    const currentIndex = useMusicPlayerStore.getState().currentSong?.index || 0;
-    const prevIndex = currentIndex === 0 ? album.items.length - 1 : currentIndex - 1;
+    const currentIndex = currentSong.index;
+    const prevIndex = currentIndex - 1;
 
-    playSong(activeAlbum, prevIndex);
+    playSong(album.albumId, prevIndex);
   },
 }));

@@ -1,19 +1,26 @@
 import { Asset } from 'expo-media-library';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { View, Text, FlatList, Pressable, Image, StyleSheet } from 'react-native';
 import { BackgroundWrapper } from '@components';
 import { COLORS } from '@global';
-import { useAlbumStore } from '@store';
+import { useAlbumStore, useMusicManagerStore } from '@store';
 import { durationToTime } from '@utils';
 
 function AlbumDetailsScreen() {
   const { albumId } = useLocalSearchParams();
   const { albumList } = useAlbumStore();
+  const router = useRouter();
+  const { playSong } = useMusicManagerStore();
 
   const selectedAlbum = albumList.find(item => item.albumId === albumId);
 
-  const renderSongItem = ({ item }: { item: Asset }) => (
-    <Pressable style={styles.albumItem} onPress={() => console.log('Play song:', item.filename)}>
+  const renderSongItem = ({ item, index }: { item: Asset; index: number }) => (
+    <Pressable
+      style={styles.albumItem}
+      onPress={() => {
+        playSong(albumId as string, index);
+        router.push('/(tabs)/music-player');
+      }}>
       <Image
         source={require('../../../src/assets/avatars/avatar_1.png')}
         style={styles.albumImage}

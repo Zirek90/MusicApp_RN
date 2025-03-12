@@ -43,7 +43,7 @@ export const useAlbumStore = create<AlbumStore>(set => ({
           );
         }
 
-        return [...acc, { album: directory, albumId: file.albumId, items: [file] }];
+        return [...acc, { albumName: directory, albumId: file.albumId, items: [file] }];
       }, []);
     };
 

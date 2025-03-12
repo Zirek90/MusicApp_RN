@@ -2,16 +2,9 @@ import { Audio } from 'expo-av';
 import { create } from 'zustand';
 import { SongStatus } from '@enums';
 import { MusicService } from '@service';
+import { CurrentSong } from '@types';
 
-interface CurrentSong {
-  id: string;
-  filename: string;
-  songStatus: SongStatus | null;
-  duration: number;
-  index: number;
-}
-
-interface MusicPlayerStore {
+export interface MusicPlayerStore {
   song: Audio.Sound | null;
   songProgress: number;
   currentSong: CurrentSong | null;
@@ -24,46 +17,49 @@ interface MusicPlayerStore {
 export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
   song: null,
   songProgress: 0,
+  isPlaying: false,
   currentSong: null,
 
   handlePlay: async (songData, uri) => {
     const { song, currentSong } = get();
     const { handleStop } = useMusicPlayerStore.getState();
 
-    // Stop the current song if it's playing a different song
     if (song && currentSong?.id !== songData.id) {
-      await handleStop(); // Stop the current song gracefully before starting a new one
+      await handleStop();
     }
-
     const newSound = await MusicService.play(
       uri,
-      progress => set({ songProgress: progress }), // Update song progress
-      updatedSong => set({ currentSong: updatedSong }), // Ensure updatedSong is of type CurrentSong
-      songData.duration, // Pass the song's duration
-      false, // Not reactivated yet
+      progress => set({ songProgress: progress }),
+      updatedSong =>
+        set({
+          currentSong: {
+            ...updatedSong,
+            albumName: songData.albumName,
+            isPlaying: true,
+          },
+        }),
+      songData.duration,
+      false,
     );
 
     set({
       song: newSound,
-      currentSong: songData, // Set the new current song details
+      currentSong: songData,
     });
   },
-
   handlePause: async () => {
     const { song, currentSong } = get();
     if (!song) return;
     await MusicService.pause(song);
-    set({ currentSong: { ...currentSong!, songStatus: SongStatus.PAUSE } });
+    set({ currentSong: { ...currentSong!, songStatus: SongStatus.PAUSE, isPlaying: false } });
   },
-
   handleResume: async () => {
     const { song, currentSong } = get();
     if (song) {
       await MusicService.resume(song);
-      set({ currentSong: { ...currentSong!, songStatus: SongStatus.PLAY } });
+      set({ currentSong: { ...currentSong!, songStatus: SongStatus.PLAY, isPlaying: true } });
     }
   },
-
   handleStop: async () => {
     const { song } = get();
     if (song) {

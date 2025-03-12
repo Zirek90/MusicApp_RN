@@ -31,7 +31,7 @@ function AlbumScreen() {
         style={styles.albumImage}
       />
       <View style={styles.albumInfo}>
-        <Text style={styles.albumTitle}>{item.album}</Text>
+        <Text style={styles.albumTitle}>{item.albumName}</Text>
         <Text style={styles.albumCount}>{item.items?.length} songs</Text>
       </View>
     </Pressable>
