@@ -1,19 +1,24 @@
 import { StyleSheet, View } from 'react-native';
-import { MusicPlayerImage } from '../../src/components/music-player-image';
-import { BackgroundWrapper, MusicPlayerControllers, MusicPlayerInfo } from '@components';
-import { COLORS } from '@global';
+import {
+  BackgroundWrapper,
+  MusicPlayerControllers,
+  MusicPlayerInfo,
+  MusicPlayerImage,
+  MusicPlayerSlider,
+  MusicPlayerDurationInfo,
+} from '@components';
 import { useMusicManagerStore, useMusicPlayerStore } from '@store';
 
 function MusicPlayer() {
   const { nextSong, previousSong, isFirst, isLast } = useMusicManagerStore();
-  const { currentSong, handlePause, handleResume, songProgress } = useMusicPlayerStore();
+  const { currentSong, handlePause, handleResume, songProgress, seekTo } = useMusicPlayerStore();
+  const duration = currentSong?.duration ?? 0;
 
   return (
     <BackgroundWrapper>
       <View style={styles.container}>
         <MusicPlayerImage />
         <MusicPlayerInfo currentSong={currentSong} />
-
         <MusicPlayerControllers
           nextSong={nextSong}
           previousSong={previousSong}
@@ -23,10 +28,8 @@ function MusicPlayer() {
           handlePause={handlePause}
           handleResume={handleResume}
         />
-
-        <View style={styles.progressBarContainer}>
-          <View style={[styles.progressBar, { width: `${songProgress}%` }]} />
-        </View>
+        <MusicPlayerSlider songProgress={songProgress} seekTo={seekTo} />
+        <MusicPlayerDurationInfo songProgress={songProgress} duration={duration} />
       </View>
     </BackgroundWrapper>
   );
@@ -37,18 +40,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  progressBarContainer: {
-    width: '80%',
-    height: 5,
-    backgroundColor: COLORS.gray_secondary,
-    borderRadius: 5,
-    overflow: 'hidden',
-    marginTop: 10,
-  },
-  progressBar: {
-    height: '100%',
-    backgroundColor: COLORS.yellow,
   },
 });
 
