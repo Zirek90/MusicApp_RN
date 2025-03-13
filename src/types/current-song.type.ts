@@ -6,7 +6,6 @@ export type CurrentSong = {
   songStatus: SongStatus | null;
   duration: number;
   index: number;
-  isLooping: boolean;
   isPlaying: boolean;
   albumName: string;
 };

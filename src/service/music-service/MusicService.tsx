@@ -15,7 +15,6 @@ export const MusicService = {
     const updatedSong: CurrentSong = {
       ...currentSong,
       songStatus: SongStatus.PLAY,
-      isLooping: false,
     };
     setCurrentSong(updatedSong);
 
@@ -70,21 +69,6 @@ export const MusicService = {
         ? { ...state.currentSong, songStatus: SongStatus.PLAY, isPlaying: true }
         : null,
     }));
-  },
-  loop: async (soundObject: Audio.Sound) => {
-    const status = await soundObject.getStatusAsync();
-    if (status.isLoaded) {
-      await soundObject.setStatusAsync({ isLooping: !status.isLooping });
-      useMusicPlayerStore.setState(state => ({
-        currentSong: state.currentSong
-          ? {
-              ...state.currentSong,
-              isLooping: !state.currentSong.isLooping,
-              songStatus: SongStatus.LOOP,
-            }
-          : null,
-      }));
-    }
   },
   seekTo: async (soundObject: Audio.Sound, time: number) => {
     if (soundObject) {

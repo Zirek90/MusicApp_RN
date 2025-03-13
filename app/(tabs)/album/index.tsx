@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   albumItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.yellow,
+    backgroundColor: COLORS.yellow_secondary,
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,

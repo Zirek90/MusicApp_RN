@@ -31,7 +31,6 @@ export const useMusicManagerStore = create<MusicManagerStore>((set, get) => ({
       songStatus: SongStatus.PLAY,
       duration: song.duration,
       index: songIndex,
-      isLooping: false,
       isPlaying: true,
       albumName: album.albumName,
     };

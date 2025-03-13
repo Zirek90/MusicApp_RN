@@ -1,4 +1,5 @@
 import { HStack, Text } from 'native-base';
+import { COLORS } from '@global';
 import { MusicPlayerStore } from '@store';
 import { calculateCurrentTime, durationToTime } from '@utils';
 
@@ -12,10 +13,10 @@ export function MusicPlayerDurationInfo(props: MusicPlayerDurationInfoProps) {
 
   return (
     <HStack justifyContent="space-between" w={'80%'}>
-      <Text fontSize="md" color="white">
+      <Text fontSize="md" color={COLORS.white}>
         {calculateCurrentTime(duration, songProgress)}
       </Text>
-      <Text fontSize="md" color="white">
+      <Text fontSize="md" color={COLORS.white}>
         {durationToTime(duration)}
       </Text>
     </HStack>
