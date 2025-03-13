@@ -1,2 +1,2 @@
-export { BackgroundProvider, useBackgroundContext } from './BackgroundContext';
-export { PermissionContextProvider, usePermissionContext } from './PermissionContext';
+export * from './background-context';
+export * from './permission-context';

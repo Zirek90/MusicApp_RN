@@ -9,7 +9,7 @@ export const COLORS = {
   progress_bar_end: '#195614',
   inactive: '#ffffff',
   active: '#3cff00',
-  hold: '#ff1100',
+  red: '#ff1100',
   yellow: '#8f8d6b',
   gray_primary: '#424242',
   gray_secondary: '#b0b0b0',

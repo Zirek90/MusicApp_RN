@@ -1,1 +1,1 @@
-export * from './song-header';
+export * from './SongHeader';

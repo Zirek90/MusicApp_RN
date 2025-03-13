@@ -1,2 +1,2 @@
-export { MusicService } from './MusicService';
-export { StorageService } from './StorageService';
+export { MusicService } from './music-service';
+export { StorageService } from './storage-service';

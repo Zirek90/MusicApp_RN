@@ -1,4 +1,4 @@
-import { durationToTime } from './duration_to_time';
+import { durationToTime } from './duration-to-time';
 
 export const calculateCurrentTime = (duation: number, progress: number) => {
   const currentTime = (duation * progress) / 100;

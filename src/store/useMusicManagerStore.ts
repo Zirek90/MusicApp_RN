@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { useAlbumStore } from './useAlbumStore';
 import { useMusicPlayerStore } from './useMusicStore';
 import { SongStatus } from '@enums';
-import { Album } from '@types';
+import { Album, CurrentSong } from '@types';
 
 export interface MusicManagerStore {
   activeAlbumId: string | null;
@@ -25,16 +25,18 @@ export const useMusicManagerStore = create<MusicManagerStore>((set, get) => ({
     const song = album.items[songIndex];
     if (!song) return;
 
-    useMusicPlayerStore.getState().handlePlay(
-      {
-        ...song,
-        songStatus: SongStatus.PLAY,
-        index: songIndex,
-        isPlaying: true,
-        albumName: album.albumName,
-      },
-      song.uri,
-    );
+    const currentSong: CurrentSong = {
+      id: song.id,
+      filename: song.filename,
+      songStatus: SongStatus.PLAY,
+      duration: song.duration,
+      index: songIndex,
+      isLooping: false,
+      isPlaying: true,
+      albumName: album.albumName,
+    };
+
+    useMusicPlayerStore.getState().handlePlay(currentSong, song.uri);
 
     set({
       activeAlbumId: album.albumId,

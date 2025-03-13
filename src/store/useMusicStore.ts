@@ -12,6 +12,7 @@ export interface MusicPlayerStore {
   handlePause: () => Promise<void>;
   handleResume: () => Promise<void>;
   handleStop: () => Promise<void>;
+  seekTo: (progress: number) => void;
 }
 
 export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
@@ -27,18 +28,21 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
     if (song && currentSong?.id !== songData.id) {
       await handleStop();
     }
+
     const newSound = await MusicService.play(
       uri,
-      progress => set({ songProgress: progress }),
-      updatedSong =>
-        set({
+      songData,
+      (progress: number) => set({ songProgress: progress }),
+      (updatedSong: CurrentSong) => {
+        set(state => ({
           currentSong: {
+            ...state.currentSong,
             ...updatedSong,
             albumName: songData.albumName,
             isPlaying: true,
           },
-        }),
-      songData.duration,
+        }));
+      },
       false,
     );
 
@@ -66,5 +70,14 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
       await MusicService.stop(song);
       set({ song: null, currentSong: null, songProgress: 0 });
     }
+  },
+  seekTo: progress => {
+    const { song, currentSong } = get();
+    if (!currentSong || !song) return;
+
+    const newTime = (progress / 100) * currentSong.duration;
+    MusicService.seekTo(song, newTime);
+
+    set({ songProgress: progress });
   },
 }));
