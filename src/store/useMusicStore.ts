@@ -1,5 +1,6 @@
 import { Audio } from 'expo-av';
 import { create } from 'zustand';
+import { useMusicManagerStore } from './useMusicManagerStore';
 import { SongStatus } from '@enums';
 import { MusicService } from '@service';
 import { CurrentSong } from '@types';
@@ -22,8 +23,8 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
   currentSong: null,
 
   handlePlay: async (songData, uri) => {
-    const { song, currentSong } = get();
-    const { handleStop } = useMusicPlayerStore.getState();
+    const { song, currentSong, handleStop } = get();
+    const { nextSong } = useMusicManagerStore.getState();
 
     if (song && currentSong?.id !== songData.id) {
       await handleStop();
@@ -44,6 +45,7 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
         }));
       },
       false,
+      nextSong,
     );
 
     set({

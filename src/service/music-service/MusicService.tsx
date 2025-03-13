@@ -11,6 +11,7 @@ export const MusicService = {
     setProgress: (progress: number) => void,
     setCurrentSong: (song: CurrentSong) => void,
     isReactivated: boolean = false,
+    onEndCallback?: () => void,
   ) => {
     const updatedSong: CurrentSong = {
       ...currentSong,
@@ -29,6 +30,7 @@ export const MusicService = {
 
         if (status.didJustFinish && !status.isLooping) {
           setCurrentSong({ ...updatedSong, songStatus: SongStatus.STOP });
+          onEndCallback?.();
         }
       }
     });
