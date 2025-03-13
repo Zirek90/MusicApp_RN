@@ -1,22 +1,17 @@
 import { Audio } from 'expo-av';
 import { StorageService } from '../storage-service';
 import { SongStatus } from '@enums';
-import { useMusicPlayerStore } from '@store';
 import { CurrentSong } from '@types';
 
 export const MusicService = {
   play: async (
     uri: string,
-    currentSong: CurrentSong,
+    updatedSong: CurrentSong,
     setProgress: (progress: number) => void,
     setCurrentSong: (song: CurrentSong) => void,
     isReactivated: boolean = false,
     onEndCallback?: () => void,
   ) => {
-    const updatedSong: CurrentSong = {
-      ...currentSong,
-      songStatus: SongStatus.PLAY,
-    };
     setCurrentSong(updatedSong);
 
     const { sound } = await Audio.Sound.createAsync({ uri }, { shouldPlay: true }, async status => {
@@ -38,7 +33,7 @@ export const MusicService = {
     if (isReactivated) {
       const savedProgress = await StorageService.get('songProgress');
       if (savedProgress) {
-        const currentPosition = (savedProgress / 100) * currentSong.duration;
+        const currentPosition = (savedProgress / 100) * updatedSong.duration;
         await sound.setPositionAsync(currentPosition * 1000);
       }
     }
@@ -49,28 +44,12 @@ export const MusicService = {
   stop: async (soundObject: Audio.Sound) => {
     await soundObject.stopAsync();
     await soundObject.unloadAsync();
-    useMusicPlayerStore.setState(state => ({
-      currentSong: state.currentSong
-        ? { ...state.currentSong, songStatus: SongStatus.STOP, isPlaying: false }
-        : null,
-      song: null,
-    }));
   },
   pause: async (soundObject: Audio.Sound) => {
     await soundObject.pauseAsync();
-    useMusicPlayerStore.setState(state => ({
-      currentSong: state.currentSong
-        ? { ...state.currentSong, songStatus: SongStatus.PAUSE, isPlaying: false }
-        : null,
-    }));
   },
   resume: async (soundObject: Audio.Sound) => {
     await soundObject.playAsync();
-    useMusicPlayerStore.setState(state => ({
-      currentSong: state.currentSong
-        ? { ...state.currentSong, songStatus: SongStatus.PLAY, isPlaying: true }
-        : null,
-    }));
   },
   seekTo: async (soundObject: Audio.Sound, time: number) => {
     if (soundObject) {

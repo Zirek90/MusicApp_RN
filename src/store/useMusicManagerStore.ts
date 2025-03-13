@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { useAlbumStore } from './useAlbumStore';
-import { useMusicPlayerStore } from './useMusicStore';
+import { useMusicPlayerStore } from './useMusicPlayerStore';
 import { SongStatus } from '@enums';
 import { Album, CurrentSong } from '@types';
 

@@ -41,6 +41,7 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
             ...updatedSong,
             albumName: songData.albumName,
             isPlaying: true,
+            songStatus: SongStatus.PLAY,
           },
         }));
       },
