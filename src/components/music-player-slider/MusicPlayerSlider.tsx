@@ -34,7 +34,7 @@ export function MusicPlayerSlider(props: MusicPlayerSliderProps) {
         value={localProgress}
         minValue={0}
         maxValue={100}
-        colorScheme="darkBlue"
+        colorScheme="yellow"
         onChange={handleOnChange}
         onChangeEnd={handleOnChangeEnd}>
         <Slider.Track>
