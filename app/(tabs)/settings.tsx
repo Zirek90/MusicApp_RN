@@ -1,13 +1,28 @@
+import { useEffect } from 'react';
 import * as Application from 'expo-application';
-import { Heading, Text } from 'native-base';
+import * as Updates from 'expo-updates';
+import { Text } from 'native-base';
 import { BackgroundWrapper } from '@components';
 
 const SettingsPage = () => {
+  useEffect(() => {
+    const onFetchUpdateAsync = async () => {
+      try {
+        const update = await Updates.checkForUpdateAsync();
+
+        if (update.isAvailable) {
+          await Updates.fetchUpdateAsync();
+          await Updates.reloadAsync();
+        }
+      } catch (error) {
+        console.error(`Error fetching latest Expo update: ${error}`);
+      }
+    };
+    onFetchUpdateAsync();
+  }, []);
+
   return (
     <BackgroundWrapper>
-      <Heading my={2} textAlign="center">
-        App name: {Application.applicationName}
-      </Heading>
       <Text textAlign="center">Build version: {Application.nativeBuildVersion}</Text>
     </BackgroundWrapper>
   );
