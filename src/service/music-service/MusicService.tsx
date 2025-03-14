@@ -20,8 +20,10 @@ export const MusicService = {
         const currentPosition = status.positionMillis / 1000;
         const progress = (currentPosition / totalDuration) * 100;
 
-        setProgress(progress);
-        StorageService.set('songProgress', progress);
+        // To avoid flickering effect
+        if (!isReactivated || (isReactivated && progress !== 0)) {
+          setProgress(progress);
+        }
 
         if (status.didJustFinish && !status.isLooping) {
           setCurrentSong({ ...updatedSong, songStatus: SongStatus.STOP });

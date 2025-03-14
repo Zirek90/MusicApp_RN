@@ -2,10 +2,12 @@ import { create } from 'zustand';
 import { useAlbumStore } from './useAlbumStore';
 import { useMusicPlayerStore } from './useMusicPlayerStore';
 import { SongStatus } from '@enums';
+import { StorageService } from '@service';
 import { Album, CurrentSong } from '@types';
 
 export interface MusicManagerStore {
   activeAlbumId: string | null;
+  restoreManagerState: () => void;
   playSong: (albumId: Album['albumId'], songIndex: number) => void;
   nextSong: () => void;
   previousSong: () => void;
@@ -18,6 +20,12 @@ export const useMusicManagerStore = create<MusicManagerStore>((set, get) => ({
   isFirst: false,
   isLast: false,
 
+  restoreManagerState: async () => {
+    const activeAlbumId = await StorageService.get('activeAlbumId');
+    if (activeAlbumId) {
+      set({ activeAlbumId });
+    }
+  },
   playSong: (albumId, songIndex) => {
     const album = useAlbumStore.getState().albumList.find(a => a.albumId === albumId);
     if (!album) return;
@@ -27,6 +35,7 @@ export const useMusicManagerStore = create<MusicManagerStore>((set, get) => ({
 
     const currentSong: CurrentSong = {
       id: song.id,
+      uri: song.uri,
       filename: song.filename,
       songStatus: SongStatus.PLAY,
       duration: song.duration,
@@ -42,6 +51,7 @@ export const useMusicManagerStore = create<MusicManagerStore>((set, get) => ({
       isFirst: songIndex === 0,
       isLast: songIndex === album.items.length - 1,
     });
+    StorageService.set('activeAlbumId', album.albumId);
   },
   nextSong: () => {
     const { playSong, activeAlbumId } = get();

@@ -1,31 +1,50 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Album, CurrentSong } from '@types';
 
-type StorageServiceGetAllOutput = {
-  album: Album;
-  currentSong: CurrentSong;
-  songProgress: string;
-  songIndex: string;
-  songDuration: string;
-};
+type StorageKeys = 'currentSong' | 'songProgress' | 'activeAlbumId';
+type StorageValues = Album['albumId'] | CurrentSong | number;
 
 export const StorageService = {
-  get: async (key: string) => {
-    const stringifiedItem = await AsyncStorage.getItem(key);
-    return stringifiedItem ? JSON.parse(stringifiedItem) : null;
+  get: async (key: StorageKeys) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      return value ? JSON.parse(value) : null;
+    } catch (error) {
+      console.error(`Error getting item from storage: ${key}`, error);
+      return null;
+    }
   },
   getAll: async () => {
-    const keys = await AsyncStorage.getAllKeys();
-    const result = await AsyncStorage.multiGet(keys);
-    const output = result
-      .map(item => ({
-        [item[0]]: item[1] ? JSON.parse(item[1]) : null,
-      }))
-      .reduce((acc, item) => ({ ...acc, ...item }), {}); // I need object here instead of array so transform it to needed shape
-    return output as StorageServiceGetAllOutput;
+    try {
+      const keys: StorageKeys[] = ['currentSong', 'songProgress', 'activeAlbumId'];
+      const result = await AsyncStorage.multiGet(keys);
+
+      const output = result.reduce(
+        (acc, [key, value]) => {
+          acc[key as StorageKeys] = value ? JSON.parse(value) : null;
+          return acc;
+        },
+        {} as Record<StorageKeys, StorageValues | null>,
+      );
+
+      return output;
+    } catch (error) {
+      console.error('Error retrieving all storage values', error);
+      return null;
+    }
   },
-  set: async (key: string, item: Album | CurrentSong | number) => {
-    const stringifiedItem = JSON.stringify(item);
-    await AsyncStorage.setItem(key, stringifiedItem);
+  set: async (key: string, value: Album['albumId'] | CurrentSong | number) => {
+    try {
+      await AsyncStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      console.error(`Error setting item in storage: ${key}`, error);
+    }
+  },
+  remove: async (key: string) => {
+    try {
+      await AsyncStorage.removeItem(key);
+    } catch (error) {
+      console.error(`Error removing item from storage: ${key}`, error);
+    }
   },
 };
