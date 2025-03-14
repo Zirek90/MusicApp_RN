@@ -17,7 +17,7 @@ function MusicPlayer() {
   return (
     <BackgroundWrapper>
       <View style={styles.container}>
-        <MusicPlayerImage />
+        <MusicPlayerImage isPlaying={currentSong?.isPlaying || false} />
         <MusicPlayerInfo currentSong={currentSong} />
         <MusicPlayerControllers
           nextSong={nextSong}
