@@ -1,4 +1,4 @@
-export * from './background-wrapper';
+export * from './gradient-wrapper';
 export * from './header';
 export * from './music-player-image';
 export * from './music-player-info';

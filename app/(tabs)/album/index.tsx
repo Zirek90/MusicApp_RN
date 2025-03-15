@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { FlatList, Pressable, View, Text, Image, StyleSheet } from 'react-native';
-import { BackgroundWrapper } from '@components';
+import { GradientWrapper } from '@components';
 import { COLORS } from '@global';
 import { useAlbumStore } from '@store';
 import { Album } from '@types';
@@ -18,27 +19,33 @@ function AlbumScreen() {
   }, []);
 
   const renderAlbumItem = ({ item }: { item: Album }) => (
-    <Pressable
-      style={styles.albumItem}
-      onPress={() =>
-        router.push({
-          pathname: '/(tabs)/album/[albumId]',
-          params: { albumId: item.albumId! },
-        })
-      }>
-      <Image
-        source={require('../../../src/assets/avatars/avatar_1.png')}
-        style={styles.albumImage}
-      />
-      <View style={styles.albumInfo}>
-        <Text style={styles.albumTitle}>{item.albumName}</Text>
-        <Text style={styles.albumCount}>{item.items?.length} songs</Text>
-      </View>
-    </Pressable>
+    <LinearGradient
+      colors={[COLORS.gradient_primary, COLORS.gradient_secondary]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0.5, y: 1 }}
+      style={styles.gradient}>
+      <Pressable
+        style={styles.albumItem}
+        onPress={() =>
+          router.push({
+            pathname: '/(tabs)/album/[albumId]',
+            params: { albumId: item.albumId! },
+          })
+        }>
+        <Image
+          source={require('../../../src/assets/avatars/avatar_1.png')}
+          style={styles.albumImage}
+        />
+        <View style={styles.albumInfo}>
+          <Text style={styles.albumTitle}>{item.albumName}</Text>
+          <Text style={styles.albumCount}>{item.items?.length} songs</Text>
+        </View>
+      </Pressable>
+    </LinearGradient>
   );
 
   return (
-    <BackgroundWrapper>
+    <GradientWrapper>
       <Text style={styles.pageTitle}>Available Albums</Text>
 
       <FlatList
@@ -47,7 +54,7 @@ function AlbumScreen() {
         renderItem={renderAlbumItem}
         contentContainerStyle={styles.listContainer}
       />
-    </BackgroundWrapper>
+    </GradientWrapper>
   );
 }
 
@@ -61,13 +68,14 @@ const styles = StyleSheet.create({
   listContainer: {
     paddingHorizontal: 20,
   },
-  albumItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: COLORS.yellow_secondary,
+  gradient: {
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,
+  },
+  albumItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   albumImage: {
     width: 50,
@@ -85,7 +93,7 @@ const styles = StyleSheet.create({
   },
   albumCount: {
     fontSize: 13,
-    color: COLORS.gray_primary,
+    color: COLORS.gray_secondary,
   },
 });
 

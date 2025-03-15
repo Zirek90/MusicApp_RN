@@ -9,7 +9,7 @@ function TabBarIcon(props: {
   color: string;
   opacity?: number;
 }) {
-  return <MaterialCommunityIcons size={28} style={{ marginBottom: -3 }} {...props} />;
+  return <MaterialCommunityIcons size={28} {...props} />;
 }
 
 function InitialPage() {
@@ -25,7 +25,18 @@ function InitialPage() {
           headerTitleAlign: 'center',
           headerTintColor: COLORS.white,
           tabBarStyle: {
-            backgroundColor: COLORS.black,
+            position: 'absolute',
+            backgroundColor: COLORS.black_transparent_primary,
+            marginHorizontal: 10,
+            marginBottom: 5,
+            borderRadius: 20,
+            height: 60,
+            borderTopWidth: 0,
+            elevation: 15,
+            shadowColor: COLORS.black,
+            shadowOpacity: 0.1,
+            shadowRadius: 5,
+            shadowOffset: { width: 0, height: 5 },
           },
         }}>
         <Tabs.Screen

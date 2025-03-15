@@ -9,4 +9,12 @@ export const COLORS = {
   yellow_secondary: '#8f8d6b',
   gray_primary: '#424242',
   gray_secondary: '#b0b0b0',
+
+  gradient_background_primary: '#300522',
+  gradient_background_secondary: '#1a0533',
+
+  gradient_primary: '#1a237e',
+  gradient_secondary: '#3e125a',
+
+  black_transparent_primary: 'rgba(0, 0, 0, 0.8)',
 };

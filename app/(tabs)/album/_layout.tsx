@@ -2,7 +2,7 @@ import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Stack } from 'expo-router';
 import { Text, View } from 'react-native';
-import { SongHeader } from '../../../src/components/header/SongHeader';
+import { SongHeader } from '../../../src/components/header';
 import { COLORS } from '@global';
 
 function InitialPage() {

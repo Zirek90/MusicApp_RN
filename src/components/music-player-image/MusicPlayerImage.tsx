@@ -39,7 +39,7 @@ export function MusicPlayerImage(props: MusicPlayerImageProps) {
     <Animated.View style={[styles.shadowContainer, animatedStyle]}>
       <Image
         alt="album-image"
-        source={require('../../assets/avatars/avatar_2.png')}
+        source={require('../../assets/avatars/avatar_8.png')}
         style={styles.image}
       />
     </Animated.View>

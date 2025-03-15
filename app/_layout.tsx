@@ -3,8 +3,9 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { NativeBaseProvider } from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { GradientWrapper } from '@components';
 import { ThemeConfig } from '@configs';
-import { PermissionContextProvider, BackgroundProvider } from '@context';
+import { PermissionContextProvider } from '@context';
 import { useMusicManagerStore, useMusicPlayerStore } from '@store';
 
 SplashScreen.preventAutoHideAsync();
@@ -42,13 +43,13 @@ function InitialPage() {
 export default function RootLayoutNav() {
   return (
     <SafeAreaProvider>
-      <BackgroundProvider>
-        <PermissionContextProvider>
-          <NativeBaseProvider theme={ThemeConfig}>
+      <PermissionContextProvider>
+        <NativeBaseProvider theme={ThemeConfig}>
+          <GradientWrapper>
             <InitialPage />
-          </NativeBaseProvider>
-        </PermissionContextProvider>
-      </BackgroundProvider>
+          </GradientWrapper>
+        </NativeBaseProvider>
+      </PermissionContextProvider>
     </SafeAreaProvider>
   );
 }

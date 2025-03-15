@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import * as Updates from 'expo-updates';
 import { Button, Text } from 'native-base';
-import { BackgroundWrapper } from '@components';
+import { GradientWrapper } from '@components';
 
 const SettingsPage = () => {
   const [updateAvailable, setUpdateAvailable] = useState(false);
@@ -33,14 +33,14 @@ const SettingsPage = () => {
 
   if (checking) {
     return (
-      <BackgroundWrapper>
+      <GradientWrapper>
         <Text textAlign="center">Checking for updates...</Text>
-      </BackgroundWrapper>
+      </GradientWrapper>
     );
   }
 
   return (
-    <BackgroundWrapper>
+    <GradientWrapper>
       {updateAvailable ? (
         <>
           <Text fontSize="2xl" textAlign="center" color="red.500">
@@ -55,7 +55,7 @@ const SettingsPage = () => {
           Current version
         </Text>
       )}
-    </BackgroundWrapper>
+    </GradientWrapper>
   );
 };
 

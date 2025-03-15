@@ -1,11 +1,11 @@
 import { StyleSheet, View } from 'react-native';
 import {
-  BackgroundWrapper,
   MusicPlayerControllers,
   MusicPlayerInfo,
   MusicPlayerImage,
   MusicPlayerSlider,
   MusicPlayerDurationInfo,
+  GradientWrapper,
 } from '@components';
 import { useMusicManagerStore, useMusicPlayerStore } from '@store';
 
@@ -15,7 +15,7 @@ function MusicPlayer() {
   const duration = currentSong?.duration ?? 0;
 
   return (
-    <BackgroundWrapper>
+    <GradientWrapper>
       <View style={styles.container}>
         <MusicPlayerImage isPlaying={currentSong?.isPlaying || false} />
         <MusicPlayerInfo currentSong={currentSong} />
@@ -31,7 +31,7 @@ function MusicPlayer() {
         <MusicPlayerSlider songProgress={songProgress} seekTo={seekTo} />
         <MusicPlayerDurationInfo songProgress={songProgress} duration={duration} />
       </View>
-    </BackgroundWrapper>
+    </GradientWrapper>
   );
 }
 
