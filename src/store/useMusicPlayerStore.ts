@@ -62,7 +62,7 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
 
     set({
       song: newSound,
-      currentSong: songData,
+      currentSong: { ...songData, isPlaying: true },
     });
     StorageService.set('currentSong', {
       ...songData,
