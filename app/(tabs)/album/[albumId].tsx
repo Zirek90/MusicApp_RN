@@ -27,10 +27,7 @@ function AlbumDetailsScreen() {
           playSong(albumId as string, index);
           router.push('/(tabs)/music-player');
         }}>
-        <Image
-          source={require('../../../src/assets/avatars/avatar_1.png')}
-          style={styles.albumImage}
-        />
+        <Image source={selectedAlbum?.albumAvatar} style={styles.albumImage} />
         <View style={styles.albumInfo}>
           <Text style={styles.albumTitle}>{item.filename}</Text>
           <Text style={styles.albumCount}>{durationToTime(item.duration)} min</Text>
@@ -55,6 +52,7 @@ const styles = StyleSheet.create({
   listContainer: {
     paddingHorizontal: 20,
     paddingTop: 10,
+    paddingBottom: 60, //* to make space for tab bar
   },
   gradient: {
     padding: 15,

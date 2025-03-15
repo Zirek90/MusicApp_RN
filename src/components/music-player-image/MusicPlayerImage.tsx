@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Key, useEffect } from 'react';
 import { Image } from 'native-base';
 import Animated, {
   useSharedValue,
@@ -6,16 +6,17 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
-import { Platform, StyleSheet } from 'react-native';
+import { ImageSourcePropType, Platform, StyleSheet } from 'react-native';
 import { COLORS } from '@global';
 import { CurrentSong } from '@types';
 
 interface MusicPlayerImageProps {
   isPlaying: CurrentSong['isPlaying'];
+  avatar: ImageSourcePropType;
 }
 
 export function MusicPlayerImage(props: MusicPlayerImageProps) {
-  const { isPlaying } = props;
+  const { isPlaying, avatar } = props;
   const elevationValue = useSharedValue(0);
 
   useEffect(() => {
@@ -37,11 +38,7 @@ export function MusicPlayerImage(props: MusicPlayerImageProps) {
 
   return (
     <Animated.View style={[styles.shadowContainer, animatedStyle]}>
-      <Image
-        alt="album-image"
-        source={require('../../assets/avatars/avatar_8.png')}
-        style={styles.image}
-      />
+      <Image alt="album-image" source={avatar} key={avatar as Key} style={styles.image} />
     </Animated.View>
   );
 }

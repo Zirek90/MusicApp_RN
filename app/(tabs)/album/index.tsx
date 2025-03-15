@@ -32,10 +32,7 @@ function AlbumScreen() {
             params: { albumId: item.albumId! },
           })
         }>
-        <Image
-          source={require('../../../src/assets/avatars/avatar_1.png')}
-          style={styles.albumImage}
-        />
+        <Image source={item.albumAvatar} style={styles.albumImage} />
         <View style={styles.albumInfo}>
           <Text style={styles.albumTitle}>{item.albumName}</Text>
           <Text style={styles.albumCount}>{item.items?.length} songs</Text>
@@ -67,6 +64,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     paddingHorizontal: 20,
+    paddingBottom: 60, //* to make space for tab bar
   },
   gradient: {
     padding: 15,

@@ -1,5 +1,6 @@
 import * as MediaLibrary from 'expo-media-library';
 import { create } from 'zustand';
+import { AVATAR_IMAGES } from '@constants';
 import { Album } from '@types';
 import { getExtension, getDirectory } from '@utils';
 
@@ -43,7 +44,14 @@ export const useAlbumStore = create<AlbumStore>(set => ({
           );
         }
 
-        return [...acc, { albumName: directory, albumId: file.albumId, items: [file] }];
+        // Assign avatar to albums - If more albums than avatars, use the last avatar
+        const avatarIndex = Math.min(acc.length, AVATAR_IMAGES.length - 1);
+        const albumAvatar = AVATAR_IMAGES[avatarIndex];
+
+        return [
+          ...acc,
+          { albumName: directory, albumId: file.albumId, items: [file], albumAvatar },
+        ];
       }, []);
     };
 
