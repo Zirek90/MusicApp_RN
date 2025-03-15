@@ -27,6 +27,7 @@ export const useMusicManagerStore = create<MusicManagerStore>((set, get) => ({
     }
   },
   playSong: (albumId, songIndex) => {
+    const { nextSong } = get();
     const album = useAlbumStore.getState().albumList.find(a => a.albumId === albumId);
     if (!album) return;
 
@@ -44,7 +45,7 @@ export const useMusicManagerStore = create<MusicManagerStore>((set, get) => ({
       albumName: album.albumName,
     };
 
-    useMusicPlayerStore.getState().handlePlay(currentSong, song.uri);
+    useMusicPlayerStore.getState().handlePlay(currentSong, song.uri, nextSong);
 
     set({
       activeAlbumId: album.albumId,

@@ -26,7 +26,7 @@ export function MusicPlayerControllers(props: MusicPlayerControllersProps) {
       </Pressable>
 
       <Pressable
-        onPress={currentSong?.isPlaying ? handlePause : handleResume}
+        onPress={() => (currentSong?.isPlaying ? handlePause() : handleResume(nextSong))}
         style={[styles.controlButton, styles.play]}>
         <FontAwesome
           name={currentSong?.isPlaying ? 'pause' : 'play'}

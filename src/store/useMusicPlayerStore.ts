@@ -1,6 +1,5 @@
 import { Audio } from 'expo-av';
 import { create } from 'zustand';
-import { useMusicManagerStore } from './useMusicManagerStore';
 import { SongStatus } from '@enums';
 import { MusicService, StorageService } from '@service';
 import { CurrentSong } from '@types';
@@ -10,9 +9,14 @@ export interface MusicPlayerStore {
   songProgress: number;
   currentSong: CurrentSong | null;
   restorePlayerState: () => void;
-  handlePlay: (songData: CurrentSong, uri: string, reactivated?: boolean) => Promise<void>;
+  handlePlay: (
+    songData: CurrentSong,
+    uri: string,
+    nextSong: () => void,
+    reactivated?: boolean,
+  ) => Promise<void>;
   handlePause: () => Promise<void>;
-  handleResume: () => Promise<void>;
+  handleResume: (nextSong: () => void) => Promise<void>;
   handleStop: () => Promise<void>;
   seekTo: (progress: number) => void;
 }
@@ -32,9 +36,8 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
       });
     }
   },
-  handlePlay: async (songData, uri, reactivated = false) => {
+  handlePlay: async (songData, uri, nextSong, reactivated = false) => {
     const { song, currentSong, handleStop } = get();
-    const { nextSong } = useMusicManagerStore.getState();
 
     if (song && currentSong?.id !== songData.id) {
       await handleStop();
@@ -76,11 +79,11 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
     await MusicService.pause(song);
     set({ currentSong: { ...currentSong!, songStatus: SongStatus.PAUSE, isPlaying: false } });
   },
-  handleResume: async () => {
+  handleResume: async (nextSong: () => void) => {
     const { song, currentSong, handlePlay } = get();
     if (!currentSong) return;
     if (!song) {
-      await handlePlay(currentSong, currentSong.uri, true);
+      await handlePlay(currentSong, currentSong.uri, nextSong, true);
       return;
     }
 
