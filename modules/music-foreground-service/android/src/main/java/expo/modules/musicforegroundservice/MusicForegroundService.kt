@@ -18,27 +18,43 @@ class MusicForegroundService : Service() {
         super.onCreate()
         try {
           createNotificationChannel()
-          val notification = createNotification()
+          val notification = createNotification("Music Player", "No song playing")
 
           startForeground(1, notification)
         } catch (e: Exception) {
           Log.e("MusicForegroundService", "Error starting foreground service", e)
         }
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+      val title = intent?.getStringExtra("title")
+      val content = intent?.getStringExtra("content")
+
+      if (title != null && content != null) {
+          updateNotification(title, content)
       }
 
-    private fun createNotification(): android.app.Notification {
-      Log.e("MusicForegroundService", "Service started")
+      return START_STICKY
+    }
 
+    private fun createNotification(title: String, content: String): android.app.Notification {
+      Log.e("MusicForegroundService", "Service started")
       val iconResId = android.R.drawable.ic_notification_overlay 
 
       return NotificationCompat.Builder(this, channel_id)
-          .setContentTitle("Music Player")
-          .setContentText("Song detail here")
+          .setContentTitle(title)
+          .setContentText(content)
           .setSmallIcon(iconResId) // TODO figure out how to pass icon from RN
           .setPriority(NotificationCompat.PRIORITY_HIGH)
           // .setContentIntent(pendingIntent)
           .build()
-  }
+    }
+
+    private fun updateNotification(title: String, content: String) {
+      val notification = createNotification(title, content)
+      val notificationManager = getSystemService(NotificationManager::class.java)
+      notificationManager?.notify(1, notification)
+    }
 
     private fun createNotificationChannel() {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -60,4 +76,4 @@ class MusicForegroundService : Service() {
     override fun onBind(intent: Intent?): IBinder? {
       return null // TODO add binding later in next version of buttons
   }
-  }
+}
