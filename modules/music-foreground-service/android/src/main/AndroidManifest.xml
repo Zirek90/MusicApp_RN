@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="expo.modules.musicforegroundservice">
+
+    <application>
+        <service
+        android:name="expo.modules.musicforegroundservice.MusicForegroundService"
+        android:foregroundServiceType="mediaPlayback"
+        android:exported="false">
+        </service>
+    </application>
+
+</manifest>
