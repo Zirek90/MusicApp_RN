@@ -1,8 +1,10 @@
 import { AppState } from 'react-native';
 import MusicForegroundServiceModule from '../../../modules/music-foreground-service';
 
-class ForegroundServiceManager {
+class ForegroundManager {
   private isServiceRunning = false;
+  private albumName = '';
+  private songName = '';
 
   constructor() {
     AppState.addEventListener('change', this.handleAppStateChange);
@@ -11,7 +13,7 @@ class ForegroundServiceManager {
   private handleAppStateChange = async (nextAppState: string) => {
     if (nextAppState === 'background' && !this.isServiceRunning) {
       console.log('[ForegroundServiceManager] App in background, starting service...');
-      MusicForegroundServiceModule.startService();
+      MusicForegroundServiceModule.startService(this.songName, this.albumName);
       this.isServiceRunning = true;
     } else if (nextAppState === 'active' && this.isServiceRunning) {
       console.log('[ForegroundServiceManager] App back in foreground, stopping service...');
@@ -26,6 +28,11 @@ class ForegroundServiceManager {
       this.isServiceRunning = false;
     }
   };
+
+  updateSongData(title: string, content: string) {
+    this.songName = title;
+    this.albumName = content;
+  }
 }
 
-export const foregroundServiceManager = new ForegroundServiceManager();
+export const ForegroundServiceManager = new ForegroundManager();

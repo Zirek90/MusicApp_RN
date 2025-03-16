@@ -1,7 +1,7 @@
 import { Audio } from 'expo-av';
 import { create } from 'zustand';
 import { SongStatus } from '@enums';
-import { MusicService, StorageService } from '@service';
+import { ForegroundServiceManager, MusicService, StorageService } from '@service';
 import { CurrentSong } from '@types';
 
 export interface MusicPlayerStore {
@@ -67,6 +67,7 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
       song: newSound,
       currentSong: { ...songData, isPlaying: true },
     });
+
     StorageService.set('currentSong', {
       ...songData,
       songStatus: SongStatus.PAUSE,
@@ -77,6 +78,7 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
     const { song, currentSong } = get();
     if (!song) return;
     await MusicService.pause(song);
+    await ForegroundServiceManager.stopService();
     set({ currentSong: { ...currentSong!, songStatus: SongStatus.PAUSE, isPlaying: false } });
   },
   handleResume: async (nextSong: () => void) => {
@@ -94,6 +96,7 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
     const { song } = get();
     if (song) {
       await MusicService.stop(song);
+      await ForegroundServiceManager.stopService();
       set({ song: null, currentSong: null, songProgress: 0 });
       StorageService.remove('currentSong');
       StorageService.remove('songProgress');

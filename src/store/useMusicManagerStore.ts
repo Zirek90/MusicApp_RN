@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { useAlbumStore } from './useAlbumStore';
 import { useMusicPlayerStore } from './useMusicPlayerStore';
 import { SongStatus } from '@enums';
-import { StorageService } from '@service';
+import { ForegroundServiceManager, StorageService } from '@service';
 import { Album, CurrentSong } from '@types';
 
 export interface MusicManagerStore {
@@ -26,7 +26,7 @@ export const useMusicManagerStore = create<MusicManagerStore>((set, get) => ({
       set({ activeAlbumId });
     }
   },
-  playSong: (albumId, songIndex) => {
+  playSong: async (albumId, songIndex) => {
     const { nextSong } = get();
     const album = useAlbumStore.getState().albumList.find(a => a.albumId === albumId);
     if (!album) return;
@@ -46,12 +46,12 @@ export const useMusicManagerStore = create<MusicManagerStore>((set, get) => ({
     };
 
     useMusicPlayerStore.getState().handlePlay(currentSong, song.uri, nextSong);
-
     set({
       activeAlbumId: album.albumId,
       isFirst: songIndex === 0,
       isLast: songIndex === album.items.length - 1,
     });
+    ForegroundServiceManager.updateSongData(song.filename, album.albumName);
     StorageService.set('activeAlbumId', album.albumId);
   },
   nextSong: () => {
