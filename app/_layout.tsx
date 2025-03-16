@@ -5,7 +5,7 @@ import { NativeBaseProvider } from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GradientWrapper } from '@components';
 import { ThemeConfig } from '@configs';
-import { PermissionContextProvider } from '@context';
+import { PermissionContextProvider, usePermissionContext } from '@context';
 import { useMusicManagerStore, useMusicPlayerStore } from '@store';
 
 SplashScreen.preventAutoHideAsync();
@@ -16,6 +16,7 @@ function InitialPage() {
   });
   const restorePlayerState = useMusicPlayerStore(state => state.restorePlayerState);
   const restoreManagerState = useMusicManagerStore(state => state.restoreManagerState);
+  const { mediaPermissionGranted } = usePermissionContext();
 
   useEffect(() => {
     const initialize = async () => {
@@ -24,10 +25,14 @@ function InitialPage() {
       SplashScreen.hideAsync();
     };
 
+    if (!mediaPermissionGranted) {
+      return;
+    }
+
     if (loaded || error) {
       initialize();
     }
-  }, [loaded, error, restorePlayerState, restoreManagerState]);
+  }, [loaded, error, restorePlayerState, restoreManagerState, mediaPermissionGranted]);
 
   if (!loaded && !error) {
     return null;

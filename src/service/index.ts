@@ -1,2 +1,3 @@
-export { MusicService } from './music-service';
-export { StorageService } from './storage-service';
+export * from './music-service';
+export * from './storage-service';
+export * from './foreground-manager-service';

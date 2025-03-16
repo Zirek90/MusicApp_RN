@@ -1,4 +1,5 @@
 import { Audio } from 'expo-av';
+import { foregroundServiceManager } from '../foreground-manager-service';
 import { StorageService } from '../storage-service';
 import { SongStatus } from '@enums';
 import { CurrentSong } from '@types';
@@ -46,9 +47,11 @@ export const MusicService = {
   stop: async (soundObject: Audio.Sound) => {
     await soundObject.stopAsync();
     await soundObject.unloadAsync();
+    await foregroundServiceManager.stopService();
   },
   pause: async (soundObject: Audio.Sound) => {
     await soundObject.pauseAsync();
+    await foregroundServiceManager.stopService();
   },
   resume: async (soundObject: Audio.Sound) => {
     await soundObject.playAsync();

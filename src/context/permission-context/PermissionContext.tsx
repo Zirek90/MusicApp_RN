@@ -1,25 +1,37 @@
 import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react';
 import * as MediaLibrary from 'expo-media-library';
-
+import * as Notifications from 'expo-notifications';
 interface PermissionContextState {
-  permissionGranted: boolean;
+  mediaPermissionGranted: boolean;
+  notificationPermissionGranted: boolean;
 }
 
-const PermissionContext = createContext<PermissionContextState>({ permissionGranted: false });
+const PermissionContext = createContext<PermissionContextState>({
+  mediaPermissionGranted: false,
+  notificationPermissionGranted: false,
+});
 
 export const PermissionContextProvider = ({ children }: PropsWithChildren) => {
-  const [permissionGranted, setPermissionGranted] = useState(false);
+  const [mediaPermissionGranted, setMediaPermissionGranted] = useState(false);
+  const [notificationPermissionGranted, setNotificationPermissionGranted] = useState(false);
 
   useEffect(() => {
     const getPermission = async () => {
-      const permission = await MediaLibrary.requestPermissionsAsync();
-      setPermissionGranted(permission.granted);
+      const mediaPermission = await MediaLibrary.requestPermissionsAsync();
+      const notificationPermission = await Notifications.requestPermissionsAsync();
+
+      setMediaPermissionGranted(mediaPermission.granted);
+      setNotificationPermissionGranted(notificationPermission.granted);
     };
     getPermission();
   }, []);
 
   return (
-    <PermissionContext.Provider value={{ permissionGranted }}>
+    <PermissionContext.Provider
+      value={{
+        mediaPermissionGranted,
+        notificationPermissionGranted,
+      }}>
       {children}
     </PermissionContext.Provider>
   );
