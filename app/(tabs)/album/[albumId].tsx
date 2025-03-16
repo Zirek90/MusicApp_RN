@@ -27,7 +27,7 @@ function AlbumDetailsScreen() {
           playSong(albumId as string, index);
           router.push('/(tabs)/music-player');
         }}>
-        <Image source={selectedAlbum?.albumAvatar} style={styles.albumImage} />
+        <Image source={selectedAlbum?.albumAvatar?.url} style={styles.albumImage} />
         <View style={styles.albumInfo}>
           <Text style={styles.albumTitle}>{item.filename}</Text>
           <Text style={styles.albumCount}>{durationToTime(item.duration)} min</Text>

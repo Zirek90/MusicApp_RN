@@ -4,6 +4,9 @@ import { ImageSourcePropType } from 'react-native';
 export type Album = {
   albumId?: string;
   albumName: string;
-  albumAvatar?: ImageSourcePropType | undefined;
+  albumAvatar?: {
+    url: ImageSourcePropType | undefined;
+    name: string;
+  };
   items: Asset[];
 };

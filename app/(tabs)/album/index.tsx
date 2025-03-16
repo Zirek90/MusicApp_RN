@@ -32,7 +32,7 @@ function AlbumScreen() {
             params: { albumId: item.albumId! },
           })
         }>
-        <Image source={item.albumAvatar} style={styles.albumImage} />
+        <Image source={item.albumAvatar?.url} style={styles.albumImage} />
         <View style={styles.albumInfo}>
           <Text style={styles.albumTitle}>{item.albumName}</Text>
           <Text style={styles.albumCount}>{item.items?.length} songs</Text>

@@ -16,7 +16,7 @@ function MusicPlayer() {
   const { currentSong, handlePause, handleResume, songProgress, seekTo } = useMusicPlayerStore();
   const duration = currentSong?.duration ?? 0;
   const avatar = useMemo(() => {
-    return albumList.find(item => item.albumId === activeAlbumId)?.albumAvatar;
+    return albumList.find(item => item.albumId === activeAlbumId)?.albumAvatar?.url;
   }, [activeAlbumId, albumList]);
 
   return (

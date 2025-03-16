@@ -51,7 +51,11 @@ export const useMusicManagerStore = create<MusicManagerStore>((set, get) => ({
       isFirst: songIndex === 0,
       isLast: songIndex === album.items.length - 1,
     });
-    ForegroundServiceManager.updateSongData(song.filename, album.albumName);
+    ForegroundServiceManager.updateSongData(
+      song.filename,
+      album.albumName,
+      album.albumAvatar?.name!,
+    );
     StorageService.set('activeAlbumId', album.albumId);
   },
   nextSong: () => {

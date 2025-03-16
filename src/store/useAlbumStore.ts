@@ -46,7 +46,10 @@ export const useAlbumStore = create<AlbumStore>(set => ({
 
         // Assign avatar to albums - If more albums than avatars, use the last avatar
         const avatarIndex = Math.min(acc.length, AVATAR_IMAGES.length - 1);
-        const albumAvatar = AVATAR_IMAGES[avatarIndex];
+        const albumAvatar = {
+          url: AVATAR_IMAGES[avatarIndex]!.url,
+          name: AVATAR_IMAGES[avatarIndex]!.name,
+        };
 
         return [
           ...acc,
