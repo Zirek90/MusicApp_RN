@@ -22,7 +22,7 @@ export function MusicPlayerImage(props: MusicPlayerImageProps) {
   useEffect(() => {
     if (isPlaying) {
       elevationValue.value = withRepeat(
-        withTiming(20, { duration: 1000 }),
+        withTiming(30, { duration: 1000 }),
         -1, // Infinite loop
         true, // Reverse back down
       );
@@ -45,7 +45,7 @@ export function MusicPlayerImage(props: MusicPlayerImageProps) {
 
 const styles = StyleSheet.create({
   shadowContainer: {
-    shadowColor: COLORS.yellow_primary,
+    shadowColor: COLORS.white,
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 10,
