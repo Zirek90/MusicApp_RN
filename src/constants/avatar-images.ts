@@ -53,4 +53,20 @@ export const AVATAR_IMAGES: Album['albumAvatar'][] = [
     url: require('../assets/avatars/avatar_13.png'),
     name: 'avatar_13.png',
   },
+  {
+    url: require('../assets/avatars/avatar_14.png'),
+    name: 'avatar_14.png',
+  },
+  {
+    url: require('../assets/avatars/avatar_15.png'),
+    name: 'avatar_15.png',
+  },
+  {
+    url: require('../assets/avatars/avatar_16.png'),
+    name: 'avatar_16.png',
+  },
+  {
+    url: require('../assets/avatars/avatar_17.png'),
+    name: 'avatar_17.png',
+  },
 ];
