@@ -2,7 +2,7 @@ import { NativeModule, requireNativeModule } from 'expo';
 import { MusicForegroundServiceModuleEvents } from './MusicForegroundService.types';
 
 declare class MusicForegroundServiceModule extends NativeModule<MusicForegroundServiceModuleEvents> {
-  startService(title: string, content: string): string;
+  startService(title: string, content: string, avatarName: string): string;
   stopService(): string;
 }
 
