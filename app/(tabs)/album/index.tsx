@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { FlatList, Pressable, View, Text, Image, StyleSheet } from 'react-native';
+import { Text, View } from 'native-base';
+import { FlatList, Pressable, Image, StyleSheet } from 'react-native';
 import { GradientWrapper } from '@components';
+import { usePermissionContext } from '@context';
 import { COLORS } from '@global';
 import { useAlbumStore } from '@store';
 import { Album } from '@types';
@@ -10,13 +12,15 @@ import { setupAudio } from '@utils';
 
 function AlbumScreen() {
   const { albumList, fetchMusicAssets } = useAlbumStore();
+  const { mediaPermissionGranted } = usePermissionContext();
   const router = useRouter();
 
   useEffect(() => {
+    if (!mediaPermissionGranted) return;
     fetchMusicAssets();
     setupAudio();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [mediaPermissionGranted]);
 
   const renderAlbumItem = ({ item }: { item: Album }) => (
     <LinearGradient

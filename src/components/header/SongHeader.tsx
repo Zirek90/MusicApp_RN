@@ -1,7 +1,5 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { Text } from 'native-base';
-import { StyleSheet, View } from 'react-native';
-import { COLORS } from '@global';
+import { View, Text } from 'native-base';
 import { useAlbumStore } from '@store';
 import { Album } from '@types';
 
@@ -15,26 +13,11 @@ export function SongHeader(props: SongHeaderProps) {
   const selectedAlbum = albumList.find(item => item.albumId === albumId);
 
   return (
-    <View style={styles.header}>
+    <View maxW="80%" flexDirection="row" alignItems="center">
       <MaterialIcons name="music-note" size={20} color="white" />
-      <Text numberOfLines={1} ellipsizeMode="tail" style={styles.headerText}>
+      <Text numberOfLines={1} ellipsizeMode="tail" fontSize="xl" fontWeight={600} marginLeft={2}>
         {selectedAlbum?.albumName}
       </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  header: {
-    maxWidth: '80%',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  headerText: {
-    marginLeft: 10,
-    color: COLORS.white,
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-});

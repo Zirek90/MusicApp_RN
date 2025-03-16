@@ -5,18 +5,18 @@ import { NativeBaseProvider } from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GradientWrapper } from '@components';
 import { ThemeConfig } from '@configs';
-import { PermissionContextProvider, usePermissionContext } from '@context';
+import { PermissionContextProvider } from '@context';
 import { useMusicManagerStore, useMusicPlayerStore } from '@store';
 
 SplashScreen.preventAutoHideAsync();
+// TODO figure out how to set custom splash screen, for now it is taken from icon
 
 function InitialPage() {
   const [loaded, error] = useFonts({
-    Kegina: require('../assets/fonts/Kegina.otf'),
+    PlayfairDisplay: require('../assets/fonts/PlayfairDisplay.ttf'),
   });
   const restorePlayerState = useMusicPlayerStore(state => state.restorePlayerState);
   const restoreManagerState = useMusicManagerStore(state => state.restoreManagerState);
-  const { mediaPermissionGranted } = usePermissionContext();
 
   useEffect(() => {
     const initialize = async () => {
@@ -25,14 +25,10 @@ function InitialPage() {
       SplashScreen.hideAsync();
     };
 
-    if (!mediaPermissionGranted) {
-      return;
-    }
-
     if (loaded || error) {
       initialize();
     }
-  }, [loaded, error, restorePlayerState, restoreManagerState, mediaPermissionGranted]);
+  }, [loaded, error, restorePlayerState, restoreManagerState]);
 
   if (!loaded && !error) {
     return null;

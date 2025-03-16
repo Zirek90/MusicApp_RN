@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'native-base';
 import {
   MusicPlayerControllers,
   MusicPlayerInfo,
@@ -21,7 +21,7 @@ function MusicPlayer() {
 
   return (
     <GradientWrapper>
-      <View style={styles.container}>
+      <View flex={1} alignItems="center" justifyContent="center">
         <MusicPlayerImage isPlaying={currentSong?.isPlaying || false} avatar={avatar!} />
         <MusicPlayerInfo currentSong={currentSong} />
         <MusicPlayerControllers
@@ -39,13 +39,5 @@ function MusicPlayer() {
     </GradientWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default MusicPlayer;

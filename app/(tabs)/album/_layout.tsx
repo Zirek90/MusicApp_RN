@@ -1,7 +1,7 @@
 import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Stack } from 'expo-router';
-import { Text, View } from 'react-native';
+import { View, Text } from 'native-base';
 import { SongHeader } from '../../../src/components/header';
 import { COLORS } from '@global';
 
@@ -20,13 +20,9 @@ function InitialPage() {
           title: 'Albums',
 
           headerTitle: () => (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
+            <View flexDirection="row" alignItems="center">
               <MaterialIcons name="music-note" size={24} color="white" />
-              <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold', marginLeft: 8 }}>
+              <Text fontSize="xl" fontWeight={600} marginLeft={1}>
                 MusicPlayer
               </Text>
             </View>

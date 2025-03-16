@@ -1,7 +1,8 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { Asset } from 'expo-media-library';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { View, Text, FlatList, Pressable, Image, StyleSheet } from 'react-native';
+import { Text, View } from 'native-base';
+import { FlatList, Pressable, Image, StyleSheet } from 'react-native';
 import { GradientWrapper } from '@components';
 import { COLORS } from '@global';
 import { useAlbumStore, useMusicManagerStore } from '@store';

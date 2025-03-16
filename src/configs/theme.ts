@@ -7,7 +7,7 @@ export const ThemeConfig = extendTheme({
       baseStyle: () => {
         return {
           color: COLORS.white,
-          fontFamily: 'Kegina',
+          fontFamily: 'PlayfairDisplay',
         };
       },
     },
@@ -15,7 +15,7 @@ export const ThemeConfig = extendTheme({
       baseStyle: () => {
         return {
           color: COLORS.white,
-          fontFamily: 'Kegina',
+          fontFamily: 'PlayfairDisplay',
           fontSize: 18,
         };
       },
