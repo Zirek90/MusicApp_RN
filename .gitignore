@@ -2,8 +2,7 @@
 
 # dependencies
 node_modules/
-android/
-ios/
+modules/*
 
 # Expo
 .expo/
@@ -38,3 +37,8 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+# Build artifacts
+/android/.gradle
+/android/app/build
+/android/build
