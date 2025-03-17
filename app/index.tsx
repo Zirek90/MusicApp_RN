@@ -1,7 +1,12 @@
 import { Redirect } from 'expo-router';
+import { GradientWrapper } from '@components';
 
 const App = () => {
-  return <Redirect href="/(tabs)/album" />;
+  return (
+    <GradientWrapper>
+      <Redirect href="/(tabs)/album" />
+    </GradientWrapper>
+  );
 };
 
 export default App;
