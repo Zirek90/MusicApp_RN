@@ -1,5 +1,5 @@
 import { AppState } from 'react-native';
-// import MusicForegroundServiceModule from '../../../modules/music-foreground-service';
+import MusicForegroundServiceModule from '../../../modules/music-foreground-service';
 
 class ForegroundManager {
   private isServiceRunning = false;
@@ -14,18 +14,18 @@ class ForegroundManager {
   private handleAppStateChange = async (nextAppState: string) => {
     if (nextAppState === 'background' && !this.isServiceRunning) {
       console.log('[ForegroundServiceManager] App in background, starting service...');
-      // MusicForegroundServiceModule.startService(this.songName, this.albumName, this.avatarName);
+      MusicForegroundServiceModule.startService(this.songName, this.albumName, this.avatarName);
       this.isServiceRunning = true;
     } else if (nextAppState === 'active' && this.isServiceRunning) {
       console.log('[ForegroundServiceManager] App back in foreground, stopping service...');
-      // MusicForegroundServiceModule.stopService();
+      MusicForegroundServiceModule.stopService();
       this.isServiceRunning = false;
     }
   };
 
   stopService = async () => {
     if (this.isServiceRunning) {
-      // MusicForegroundServiceModule.stopService();
+      MusicForegroundServiceModule.stopService();
       this.isServiceRunning = false;
     }
   };
