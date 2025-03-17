@@ -12,8 +12,19 @@ import { useAlbumStore, useMusicManagerStore, useMusicPlayerStore } from '@store
 
 function MusicPlayer() {
   const { albumList } = useAlbumStore();
-  const { nextSong, previousSong, isFirst, isLast, activeAlbumId } = useMusicManagerStore();
-  const { currentSong, handlePause, handleResume, songProgress, seekTo } = useMusicPlayerStore();
+
+  const nextSong = useMusicManagerStore(state => state.nextSong);
+  const previousSong = useMusicManagerStore(state => state.previousSong);
+  const isFirst = useMusicManagerStore(state => state.isFirst);
+  const isLast = useMusicManagerStore(state => state.isLast);
+  const activeAlbumId = useMusicManagerStore(state => state.activeAlbumId);
+
+  const currentSong = useMusicPlayerStore(state => state.currentSong);
+  const handlePause = useMusicPlayerStore(state => state.handlePause);
+  const handleResume = useMusicPlayerStore(state => state.handleResume);
+  const songProgress = useMusicPlayerStore(state => state.songProgress);
+  const seekTo = useMusicPlayerStore(state => state.seekTo);
+
   const duration = currentSong?.duration ?? 0;
   const avatar = useMemo(() => {
     return albumList.find(item => item.albumId === activeAlbumId)?.albumAvatar?.url;

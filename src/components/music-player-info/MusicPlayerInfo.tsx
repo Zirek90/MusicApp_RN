@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Text } from 'native-base';
 import { COLORS } from '@global';
 import { CurrentSong } from '@types';
@@ -6,7 +7,7 @@ interface MusicPlayerInfoProps {
   currentSong: CurrentSong | null;
 }
 
-export function MusicPlayerInfo(props: MusicPlayerInfoProps) {
+export const MusicPlayerInfo = memo((props: MusicPlayerInfoProps) => {
   const { currentSong } = props;
 
   if (!currentSong)
@@ -26,4 +27,6 @@ export function MusicPlayerInfo(props: MusicPlayerInfoProps) {
       </Text>
     </>
   );
-}
+});
+
+MusicPlayerInfo.displayName = 'MusicPlayerInfo';

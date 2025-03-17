@@ -1,4 +1,4 @@
-import { Key, useEffect } from 'react';
+import { Key, memo, useEffect } from 'react';
 import { Image } from 'native-base';
 import Animated, {
   useSharedValue,
@@ -15,7 +15,7 @@ interface MusicPlayerImageProps {
   avatar: ImageSourcePropType;
 }
 
-export function MusicPlayerImage(props: MusicPlayerImageProps) {
+export const MusicPlayerImage = memo((props: MusicPlayerImageProps) => {
   const { isPlaying, avatar } = props;
   const elevationValue = useSharedValue(0);
 
@@ -41,7 +41,7 @@ export function MusicPlayerImage(props: MusicPlayerImageProps) {
       <Image alt="album-image" source={avatar} key={avatar as Key} style={styles.image} />
     </Animated.View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   shadowContainer: {
@@ -65,3 +65,5 @@ const styles = StyleSheet.create({
     borderColor: COLORS.gray_secondary,
   },
 });
+
+MusicPlayerImage.displayName = 'MusicPlayerImage';

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { View, Pressable } from 'native-base';
 import { COLORS } from '@global';
@@ -12,7 +13,7 @@ interface MusicPlayerControllersProps {
   handlePause: MusicPlayerStore['handlePause'];
   handleResume: MusicPlayerStore['handleResume'];
 }
-export function MusicPlayerControllers(props: MusicPlayerControllersProps) {
+export const MusicPlayerControllers = memo((props: MusicPlayerControllersProps) => {
   const { previousSong, nextSong, isFirst, isLast, currentSong, handlePause, handleResume } = props;
 
   return (
@@ -65,4 +66,6 @@ export function MusicPlayerControllers(props: MusicPlayerControllersProps) {
       </Pressable>
     </View>
   );
-}
+});
+
+MusicPlayerControllers.displayName = 'MusicPlayerControllers';
