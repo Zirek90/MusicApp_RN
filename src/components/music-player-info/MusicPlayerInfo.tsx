@@ -19,7 +19,7 @@ export const MusicPlayerInfo = memo((props: MusicPlayerInfoProps) => {
 
   return (
     <>
-      <Text fontSize="2xl" fontWeight={600}>
+      <Text fontSize="xl" mt={2} fontWeight={600}>
         {currentSong.filename || 'No Song Playing'}
       </Text>
       <Text fontSize="lg" color={COLORS.gray_secondary} fontWeight={600} mb={5}>
