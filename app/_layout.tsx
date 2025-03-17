@@ -5,7 +5,7 @@ import { NativeBaseProvider } from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GradientWrapper } from '@components';
 import { ThemeConfig } from '@configs';
-import { PermissionContextProvider } from '@context';
+import { AppStateContextProvider, PermissionContextProvider } from '@context';
 import { useMusicManagerStore, useMusicPlayerStore } from '@store';
 
 SplashScreen.preventAutoHideAsync();
@@ -45,11 +45,13 @@ export default function RootLayoutNav() {
   return (
     <SafeAreaProvider>
       <PermissionContextProvider>
-        <NativeBaseProvider theme={ThemeConfig}>
-          <GradientWrapper>
-            <InitialPage />
-          </GradientWrapper>
-        </NativeBaseProvider>
+        <AppStateContextProvider>
+          <NativeBaseProvider theme={ThemeConfig}>
+            <GradientWrapper>
+              <InitialPage />
+            </GradientWrapper>
+          </NativeBaseProvider>
+        </AppStateContextProvider>
       </PermissionContextProvider>
     </SafeAreaProvider>
   );
