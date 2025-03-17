@@ -1,5 +1,6 @@
+import { memo } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import { View, Pressable, StyleSheet } from 'react-native';
+import { View, Pressable } from 'native-base';
 import { COLORS } from '@global';
 import { MusicManagerStore, MusicPlayerStore } from '@store';
 
@@ -12,12 +13,20 @@ interface MusicPlayerControllersProps {
   handlePause: MusicPlayerStore['handlePause'];
   handleResume: MusicPlayerStore['handleResume'];
 }
-export function MusicPlayerControllers(props: MusicPlayerControllersProps) {
+export const MusicPlayerControllers = memo((props: MusicPlayerControllersProps) => {
   const { previousSong, nextSong, isFirst, isLast, currentSong, handlePause, handleResume } = props;
 
   return (
-    <View style={styles.controls}>
-      <Pressable onPress={previousSong} disabled={isFirst} style={styles.controlButton}>
+    <View flexDirection="row" justifyContent="space-between" alignItems="center" w="80%" my={5}>
+      <Pressable
+        onPress={previousSong}
+        disabled={isFirst}
+        backgroundColor={COLORS.yellow_primary}
+        borderRadius={30}
+        w={10}
+        h={10}
+        justifyContent="center"
+        alignItems="center">
         <FontAwesome
           name="step-backward"
           size={20}
@@ -27,7 +36,12 @@ export function MusicPlayerControllers(props: MusicPlayerControllersProps) {
 
       <Pressable
         onPress={() => (currentSong?.isPlaying ? handlePause() : handleResume(nextSong))}
-        style={[styles.controlButton, styles.play]}>
+        backgroundColor={COLORS.yellow_primary}
+        borderRadius={50}
+        w={20}
+        h={20}
+        justifyContent="center"
+        alignItems="center">
         <FontAwesome
           name={currentSong?.isPlaying ? 'pause' : 'play'}
           size={30}
@@ -35,7 +49,15 @@ export function MusicPlayerControllers(props: MusicPlayerControllersProps) {
         />
       </Pressable>
 
-      <Pressable onPress={nextSong} disabled={isLast} style={styles.controlButton}>
+      <Pressable
+        onPress={nextSong}
+        disabled={isLast}
+        backgroundColor={COLORS.yellow_primary}
+        borderRadius={30}
+        w={10}
+        h={10}
+        justifyContent="center"
+        alignItems="center">
         <FontAwesome
           name="step-forward"
           size={20}
@@ -44,26 +66,6 @@ export function MusicPlayerControllers(props: MusicPlayerControllersProps) {
       </Pressable>
     </View>
   );
-}
-
-const styles = StyleSheet.create({
-  controls: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '80%',
-    marginVertical: 10,
-  },
-  controlButton: {
-    backgroundColor: COLORS.yellow_primary,
-    borderRadius: 30,
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  play: {
-    width: 60,
-    height: 60,
-  },
 });
+
+MusicPlayerControllers.displayName = 'MusicPlayerControllers';

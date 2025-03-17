@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Text } from 'native-base';
 import { COLORS } from '@global';
 import { CurrentSong } from '@types';
@@ -6,7 +7,7 @@ interface MusicPlayerInfoProps {
   currentSong: CurrentSong | null;
 }
 
-export function MusicPlayerInfo(props: MusicPlayerInfoProps) {
+export const MusicPlayerInfo = memo((props: MusicPlayerInfoProps) => {
   const { currentSong } = props;
 
   if (!currentSong)
@@ -18,7 +19,7 @@ export function MusicPlayerInfo(props: MusicPlayerInfoProps) {
 
   return (
     <>
-      <Text fontSize="2xl" fontWeight={600}>
+      <Text fontSize="xl" mt={2} fontWeight={600}>
         {currentSong.filename || 'No Song Playing'}
       </Text>
       <Text fontSize="lg" color={COLORS.gray_secondary} fontWeight={600} mb={5}>
@@ -26,4 +27,6 @@ export function MusicPlayerInfo(props: MusicPlayerInfoProps) {
       </Text>
     </>
   );
-}
+});
+
+MusicPlayerInfo.displayName = 'MusicPlayerInfo';

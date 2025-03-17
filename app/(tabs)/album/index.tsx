@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { Text, View } from 'native-base';
-import { FlatList, Pressable, Image, StyleSheet } from 'react-native';
+import { Text, View, Pressable, Image } from 'native-base';
+import { FlatList, StyleSheet } from 'react-native';
 import { GradientWrapper } from '@components';
 import { usePermissionContext } from '@context';
 import { COLORS } from '@global';
@@ -29,17 +29,20 @@ function AlbumScreen() {
       end={{ x: 0.5, y: 1 }}
       style={styles.gradient}>
       <Pressable
-        style={styles.albumItem}
+        flexDirection="row"
+        alignItems="center"
         onPress={() =>
           router.push({
             pathname: '/(tabs)/album/[albumId]',
             params: { albumId: item.albumId! },
           })
         }>
-        <Image source={item.albumAvatar?.url} style={styles.albumImage} />
-        <View style={styles.albumInfo}>
-          <Text style={styles.albumTitle}>{item.albumName}</Text>
-          <Text style={styles.albumCount}>{item.items?.length} songs</Text>
+        <Image source={item.albumAvatar?.url} alt="avatar" w={10} h={10} borderRadius={10} mr={5} />
+        <View flex={1}>
+          <Text fontSize="xs" fontWeight={700}>
+            {item.albumName}
+          </Text>
+          <Text fontSize="xs">{item.items?.length} songs</Text>
         </View>
       </Pressable>
     </LinearGradient>
@@ -47,7 +50,9 @@ function AlbumScreen() {
 
   return (
     <GradientWrapper>
-      <Text style={styles.pageTitle}>Available Albums</Text>
+      <Text fontSize="2xl" mx={5} my={2} fontWeight={700}>
+        Albums
+      </Text>
 
       <FlatList
         data={albumList}
@@ -60,42 +65,14 @@ function AlbumScreen() {
 }
 
 const styles = StyleSheet.create({
-  pageTitle: {
-    fontSize: 24,
-    fontWeight: 700,
-    color: COLORS.white,
-    margin: 20,
-  },
   listContainer: {
     paddingHorizontal: 20,
     paddingBottom: 60, //* to make space for tab bar
   },
   gradient: {
-    padding: 15,
+    padding: 10,
     borderRadius: 10,
     marginBottom: 10,
-  },
-  albumItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  albumImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 10,
-    marginRight: 15,
-  },
-  albumInfo: {
-    flex: 1,
-  },
-  albumTitle: {
-    fontSize: 14,
-    fontWeight: 700,
-    color: COLORS.white,
-  },
-  albumCount: {
-    fontSize: 13,
-    color: COLORS.gray_secondary,
   },
 });
 
