@@ -1,8 +1,8 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { Asset } from 'expo-media-library';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Text, View } from 'native-base';
-import { FlatList, Pressable, Image, StyleSheet } from 'react-native';
+import { Text, View, Pressable, Image } from 'native-base';
+import { FlatList, StyleSheet } from 'react-native';
 import { GradientWrapper } from '@components';
 import { COLORS } from '@global';
 import { useAlbumStore, useMusicManagerStore } from '@store';
@@ -23,15 +23,25 @@ function AlbumDetailsScreen() {
       end={{ x: 0.5, y: 1 }}
       style={styles.gradient}>
       <Pressable
-        style={styles.albumItem}
+        flexDirection="row"
+        alignItems="center"
         onPress={() => {
           playSong(albumId as string, index);
           router.push('/(tabs)/music-player');
         }}>
-        <Image source={selectedAlbum?.albumAvatar?.url} style={styles.albumImage} />
-        <View style={styles.albumInfo}>
-          <Text style={styles.albumTitle}>{item.filename}</Text>
-          <Text style={styles.albumCount}>{durationToTime(item.duration)} min</Text>
+        <Image
+          source={selectedAlbum?.albumAvatar?.url}
+          alt="avatar"
+          w={10}
+          h={10}
+          borderRadius={10}
+          mr={5}
+        />
+        <View flex={1}>
+          <Text fontSize="xs" fontWeight={700}>
+            {item.filename}
+          </Text>
+          <Text fontSize="xs">{durationToTime(item.duration)} min</Text>
         </View>
       </Pressable>
     </LinearGradient>
@@ -56,31 +66,9 @@ const styles = StyleSheet.create({
     paddingBottom: 60, //* to make space for tab bar
   },
   gradient: {
-    padding: 15,
+    padding: 10,
     borderRadius: 10,
     marginBottom: 10,
-  },
-  albumItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  albumImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 10,
-    marginRight: 15,
-  },
-  albumInfo: {
-    flex: 1,
-  },
-  albumTitle: {
-    fontSize: 14,
-    fontWeight: 700,
-    color: COLORS.white,
-  },
-  albumCount: {
-    fontSize: 13,
-    color: COLORS.white,
   },
 });
 
