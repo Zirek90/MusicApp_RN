@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StatusBar } from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
 import { COLORS } from '@global';
 
 function TabBarIcon(props: {
@@ -14,7 +14,7 @@ function TabBarIcon(props: {
 
 function InitialPage() {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor={COLORS.background_secondary} />
 
       <Tabs
@@ -69,3 +69,9 @@ function InitialPage() {
 export default function RootLayout() {
   return <InitialPage />;
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
