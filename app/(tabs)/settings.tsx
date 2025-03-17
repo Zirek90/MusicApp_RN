@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import * as Application from 'expo-application';
 import * as Updates from 'expo-updates';
 import { Button, Text } from 'native-base';
 import { GradientWrapper } from '@components';
@@ -52,7 +53,7 @@ const SettingsPage = () => {
         </>
       ) : (
         <Text fontSize="2xl" textAlign="center" color="green.500">
-          Current version
+          Installed version: {Application.nativeApplicationVersion}
         </Text>
       )}
     </GradientWrapper>

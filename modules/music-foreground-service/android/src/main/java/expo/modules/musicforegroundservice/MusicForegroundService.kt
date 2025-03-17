@@ -82,10 +82,18 @@ class MusicForegroundService : Service() {
         val notificationManager = getSystemService(NotificationManager::class.java)
         notificationManager?.createNotificationChannel(channel)
       }
-  }
+    }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+      Log.e("MusicForegroundService", "App is closed. Stopping service...")
+      stopSelf()
+      super.onTaskRemoved(rootIntent)
+    }
 
     override fun onDestroy() {
       Log.e("MusicForegroundService", "Service stopped")
+      stopForeground(true) 
+      super.onDestroy()
     }
 
     override fun onBind(intent: Intent?): IBinder? {
