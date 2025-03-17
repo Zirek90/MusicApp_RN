@@ -1,27 +1,11 @@
-import { useEffect, useState } from 'react';
 import * as Application from 'expo-application';
 import * as Updates from 'expo-updates';
 import { Button, Text } from 'native-base';
 import { GradientWrapper } from '@components';
+import { COLORS } from '@global';
 
 const SettingsPage = () => {
-  const [updateAvailable, setUpdateAvailable] = useState(false);
-  const [checking, setChecking] = useState(true);
-
-  useEffect(() => {
-    const checkForUpdates = async () => {
-      try {
-        const update = await Updates.checkForUpdateAsync();
-        setUpdateAvailable(update.isAvailable);
-      } catch (error) {
-        console.error(`Error checking for updates: ${error}`);
-      } finally {
-        setChecking(false);
-      }
-    };
-
-    checkForUpdates();
-  }, []);
+  const { isUpdateAvailable, isChecking, isDownloading } = Updates.useUpdates();
 
   const handleUpdate = async () => {
     try {
@@ -32,7 +16,7 @@ const SettingsPage = () => {
     }
   };
 
-  if (checking) {
+  if (isChecking) {
     return (
       <GradientWrapper>
         <Text textAlign="center">Checking for updates...</Text>
@@ -42,18 +26,32 @@ const SettingsPage = () => {
 
   return (
     <GradientWrapper>
-      {updateAvailable ? (
+      <Text
+        fontSize="3xl"
+        textAlign="center"
+        mb={5}
+        borderBottomColor={COLORS.white}
+        borderBottomWidth={1}
+        pb={1}
+        borderStyle="dotted">
+        Updates
+      </Text>
+      <Text fontSize="xl" textAlign="center" color="green.400">
+        Installed version: {Application.nativeApplicationVersion}
+      </Text>
+      {isUpdateAvailable && (
         <>
-          <Text fontSize="2xl" textAlign="center" color="red.500">
+          <Text fontSize="xl" textAlign="center" color="red.500">
             Update available
           </Text>
-          <Button onPress={handleUpdate} mt={2} colorScheme="red">
+          <Button alignSelf="center" onPress={handleUpdate} my={2} w="50%" colorScheme="red">
             <Text>Update Now</Text>
           </Button>
         </>
-      ) : (
-        <Text fontSize="2xl" textAlign="center" color="green.500">
-          Installed version: {Application.nativeApplicationVersion}
+      )}
+      {isDownloading && (
+        <Text fontSize="lg" textAlign="center" color="yellow.500">
+          Downloading update. Please wait ...
         </Text>
       )}
     </GradientWrapper>
