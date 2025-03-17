@@ -11,5 +11,4 @@
 ### TODO
 
 1. Add Foreground Activity in Swift to ios
-
 2. Update Kotlin Foreground Activity for something more fancy with buttons and progress
