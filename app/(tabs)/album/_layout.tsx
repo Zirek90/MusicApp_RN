@@ -3,12 +3,14 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Stack } from 'expo-router';
 import { View, Text } from 'native-base';
 import { SongHeader } from '../../../src/components/header';
+import { GradientWrapper } from '@components';
 import { COLORS } from '@global';
 
 function InitialPage() {
   return (
     <Stack
       screenOptions={{
+        animation: 'slide_from_right',
         headerShadowVisible: false,
         headerStyle: {
           backgroundColor: COLORS.black,
@@ -32,8 +34,7 @@ function InitialPage() {
       <Stack.Screen
         name="[albumId]"
         options={({ route }: { route: { params?: { albumId?: string } } }) => ({
-          title: 'Songs',
-          headerBackButtonMenuEnabled: true,
+          title: '', //* Keep it empty as otherwise on return title appears, if remove totally then shows [albumId]
           headerTintColor: COLORS.white,
           headerTitle: () => <SongHeader albumId={route.params?.albumId!} />,
         })}
@@ -43,5 +44,9 @@ function InitialPage() {
 }
 
 export default function RootLayout() {
-  return <InitialPage />;
+  return (
+    <GradientWrapper>
+      <InitialPage />
+    </GradientWrapper>
+  );
 }
