@@ -3,6 +3,7 @@
     "name": "MusicPlayer",
     "slug": "MusicPlayer",
     "version": "1.0.0",
+    "owner": "zirek",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
