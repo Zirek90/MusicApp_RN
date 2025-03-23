@@ -15,7 +15,7 @@
     "format:fix": "prettier --write ./src ./app",
     "pre-commit": "lint-staged",
     "execute-husky": "npx husky install && npx husky add .husky/pre-commit",
-    "build:android": "eas build --platform android"
+    "build:android": "eas build --platform android --profile preview"
   },
   "jest": {
     "preset": "jest-expo"
