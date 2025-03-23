@@ -9,9 +9,14 @@ export const MusicService = {
     updatedSong: CurrentSong,
     setProgress: (progress: number) => void,
     setCurrentSong: (song: CurrentSong) => void,
+    song: Audio.Sound | null,
     isReactivated: boolean = false,
     onEndCallback?: () => void,
   ) => {
+    if (song) {
+      await song.unloadAsync();
+    }
+
     setCurrentSong(updatedSong);
 
     const { sound } = await Audio.Sound.createAsync({ uri }, { shouldPlay: true }, async status => {

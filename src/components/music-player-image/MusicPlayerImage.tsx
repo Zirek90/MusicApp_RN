@@ -29,6 +29,7 @@ export const MusicPlayerImage = memo((props: MusicPlayerImageProps) => {
     } else {
       elevationValue.value = withTiming(0, { duration: 300 });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPlaying]);
 
   const animatedStyle = useAnimatedStyle(() => ({

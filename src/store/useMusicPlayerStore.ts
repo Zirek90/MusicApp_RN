@@ -37,11 +37,7 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
     }
   },
   handlePlay: async (songData, uri, nextSong, reactivated = false) => {
-    const { song, currentSong, handleStop } = get();
-
-    if (song && currentSong?.id !== songData.id) {
-      await handleStop();
-    }
+    const { song } = get();
 
     const newSound = await MusicService.play(
       uri,
@@ -59,10 +55,12 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
           },
         }));
       },
+      song,
       reactivated,
       nextSong,
     );
 
+    ForegroundServiceManager.updateIsPlaying(true);
     set({
       song: newSound,
       currentSong: { ...songData, isPlaying: true },
@@ -78,6 +76,8 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
     const { song, currentSong } = get();
     if (!song) return;
     await MusicService.pause(song);
+
+    ForegroundServiceManager.updateIsPlaying(false);
     await ForegroundServiceManager.stopService();
     set({ currentSong: { ...currentSong!, songStatus: SongStatus.PAUSE, isPlaying: false } });
   },
@@ -89,6 +89,7 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
       return;
     }
 
+    ForegroundServiceManager.updateIsPlaying(true);
     await MusicService.resume(song);
     set({ currentSong: { ...currentSong!, songStatus: SongStatus.PLAY, isPlaying: true } });
   },
@@ -96,7 +97,9 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
     const { song } = get();
     if (song) {
       await MusicService.stop(song);
+      ForegroundServiceManager.updateIsPlaying(false);
       await ForegroundServiceManager.stopService();
+
       set({ song: null, currentSong: null, songProgress: 0 });
       StorageService.remove('currentSong');
       StorageService.remove('songProgress');

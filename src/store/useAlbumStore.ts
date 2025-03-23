@@ -1,11 +1,8 @@
 import * as MediaLibrary from 'expo-media-library';
 import { create } from 'zustand';
-import { AVATAR_IMAGES } from '@constants';
+import { AVAILABLE_EXTENSIONS, AVATAR_IMAGES, MIN_MUSIC_DURATION } from '@constants';
 import { Album } from '@types';
 import { getExtension, getDirectory } from '@utils';
-
-const MIN_MUSIC_DURATION = 5;
-const AVAILABLE_EXTENSIONS = ['mp3', 'wav', 'm4a'];
 
 interface AlbumStore {
   albumList: Album[];
@@ -27,7 +24,7 @@ export const useAlbumStore = create<AlbumStore>(set => ({
 
     const validFiles = fullMedia.assets.filter(
       file =>
-        file.duration > MIN_MUSIC_DURATION &&
+        Number(file.duration) > MIN_MUSIC_DURATION &&
         AVAILABLE_EXTENSIONS.includes(getExtension(file.filename)),
     );
 
