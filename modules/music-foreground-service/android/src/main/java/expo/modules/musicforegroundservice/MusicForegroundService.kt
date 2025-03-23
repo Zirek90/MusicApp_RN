@@ -62,6 +62,8 @@ class MusicForegroundService : Service() {
           .setSmallIcon(android.R.drawable.ic_notification_overlay) // TODO figure out how to import drawable from main android
           .setLargeIcon(iconResId)
           .setPriority(NotificationCompat.PRIORITY_HIGH)
+          .setVibrate(longArrayOf(0)) 
+          .setDefaults(Notification.DEFAULT_SOUND) 
           .build()
     }
 
@@ -76,8 +78,11 @@ class MusicForegroundService : Service() {
         val channelName = "Music Service"
         val channelDescription = "Music player notifications"
 
-        val channel = NotificationChannel(channel_id, channelName, NotificationManager.IMPORTANCE_HIGH)
-        channel.description = channelDescription
+        val channel = NotificationChannel(channel_id, channelName, NotificationManager.IMPORTANCE_LOW).apply {
+          description = channelDescription
+          enableVibration(false)  
+          vibrationPattern = longArrayOf(0) 
+      }
 
         val notificationManager = getSystemService(NotificationManager::class.java)
         notificationManager?.createNotificationChannel(channel)
