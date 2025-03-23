@@ -37,9 +37,9 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
     }
   },
   handlePlay: async (songData, uri, nextSong, reactivated = false) => {
-    const { song, currentSong, handleStop } = get();
+    const { song, handleStop } = get();
 
-    if (song && currentSong?.id !== songData.id) {
+    if (song) {
       await handleStop();
     }
 
