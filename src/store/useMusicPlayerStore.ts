@@ -37,11 +37,7 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
     }
   },
   handlePlay: async (songData, uri, nextSong, reactivated = false) => {
-    const { song, handleStop } = get();
-
-    if (song) {
-      await handleStop();
-    }
+    const { song } = get();
 
     const newSound = await MusicService.play(
       uri,
@@ -59,6 +55,7 @@ export const useMusicPlayerStore = create<MusicPlayerStore>((set, get) => ({
           },
         }));
       },
+      song,
       reactivated,
       nextSong,
     );
