@@ -55,11 +55,17 @@ class MusicForegroundService : Service() {
     private fun createNotification(title: String, content: String,  imageName: String): android.app.Notification {
       Log.e("MusicForegroundService", "Service started")
       val iconResId = getBitmapFromAssets(imageName)
+      var smallIconResId = this.resources.getIdentifier("ic_notification_icon", "drawable", this.packageName)
+
+      if (smallIconResId == 0) {
+        Log.e("MusicForegroundService", "Resource for small icon not found!")
+        smallIconResId = android.R.drawable.ic_notification_overlay
+      }
 
       return NotificationCompat.Builder(this, channel_id)
           .setContentTitle(title)
           .setContentText(content)
-          .setSmallIcon(android.R.drawable.ic_notification_overlay) // TODO figure out how to import drawable from main android
+          .setSmallIcon(smallIconResId) 
           .setLargeIcon(iconResId)
           .setPriority(NotificationCompat.PRIORITY_HIGH)
           .setVibrate(longArrayOf(0)) 

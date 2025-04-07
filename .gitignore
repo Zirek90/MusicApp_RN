@@ -41,3 +41,4 @@ app-example
 /android/.gradle
 /android/app/build
 /android/build
+modules/music-foreground-service/android/build/
