@@ -3,7 +3,7 @@ import { useSharedValue, withTiming, Easing } from 'react-native-reanimated';
 import { SongStatus } from '@enums';
 
 interface useSlideUpAndDownAnimationProps {
-  status: SongStatus;
+  status: SongStatus | null;
 }
 
 export const useSlideUpAndDownAnimation = ({ status }: useSlideUpAndDownAnimationProps) => {

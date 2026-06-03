@@ -1,15 +1,13 @@
 import { Box, HStack, Text, Slider } from 'native-base';
 import { durationToTime } from '@utils';
-import { withMusicContext } from '@hoc';
 import { INITIAL_MUSIC_POSITION } from '@constants';
 import { useSongProgress } from './hook';
-import { SongProgressProps } from './type/songProgress.type';
+import { useMusicStore } from 'src/store';
 
-const SongProgressComponent = ({
-  songProgress,
-  handleSongProgress,
-  duration,
-}: SongProgressProps) => {
+export const SongProgress = () => {
+  const songProgress = useMusicStore(state => state.songProgress);
+  const handleSongProgress = useMusicStore(state => state.handleSongProgress);
+  const duration = useMusicStore(state => state.currentSong.duration);
   const { currentValue, setIsDragActive, handleSliderChange, currentTimePositionRef } =
     useSongProgress({ songProgress, handleSongProgress, duration });
 
@@ -33,9 +31,3 @@ const SongProgressComponent = ({
     </Box>
   );
 };
-
-export const SongProgress = withMusicContext(SongProgressComponent, {
-  songProgress: data => data.songProgress,
-  handleSongProgress: data => data.handleSongProgress,
-  duration: data => data.currentSong.duration,
-});

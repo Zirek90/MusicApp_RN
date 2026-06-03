@@ -2,16 +2,16 @@ import { useCallback } from 'react';
 import { Box, FlatList, Heading } from 'native-base';
 import { Asset } from 'expo-media-library';
 import { SongItem } from '../SongItem';
-import { useAlbumsContext } from '@context';
+import { useAlbumStore } from 'src/store';
 
 const SONG_HEIGHT = 45;
 
 export const AlbumSongs = () => {
-  const { activeAlbum, currentlyPlayedAlbum } = useAlbumsContext();
+  const { activeAlbum, currentlyPlayedAlbum } = useAlbumStore();
   const albumSource = activeAlbum || currentlyPlayedAlbum;
 
   const getSongLayout = useCallback(
-    (_data: ArrayLike<Asset> | null | undefined, index: number) => ({
+    (_: ArrayLike<Asset> | null | undefined, index: number) => ({
       length: SONG_HEIGHT,
       offset: SONG_HEIGHT * index,
       index,

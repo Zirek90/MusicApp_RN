@@ -1,18 +1,16 @@
 import { PropsWithChildren, createContext, useContext, useEffect, useCallback } from 'react';
 import { AppState } from 'react-native';
-import { useMusicContext } from '../MusicContext';
 import { SongStatus } from '@enums';
 import { ForewardService } from '@service';
-import { useAlbumsContext } from '../AlbumContext';
+import { useAlbumStore, useMusicStore } from 'src/store';
 
 const ForeroundActivityContext = createContext({});
 
 export const ForeroundActivityProvider = ({ children }: PropsWithChildren) => {
-  const { activeAlbum } = useAlbumsContext();
-  const {
-    currentSong: { songStatus, index },
-    songDetails,
-  } = useMusicContext();
+  const activeAlbum = useAlbumStore(state => state.activeAlbum);
+  const currentSong = useMusicStore(state => state.currentSong);
+  const songDetails = useMusicStore(state => state.songDetails);
+  const { songStatus, index } = currentSong;
 
   const handleForegroundServiceStart = useCallback(() => {
     if (songStatus !== SongStatus.PLAY) return;

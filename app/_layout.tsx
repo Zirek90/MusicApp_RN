@@ -1,13 +1,7 @@
 import { SplashScreen, Stack } from 'expo-router';
 import { useFonts } from 'expo-font';
 import { NativeBaseProvider } from 'native-base';
-import {
-  AlbumsContextProvider,
-  MusicContextProvider,
-  PermissionContextProvider,
-  ForeroundActivityProvider,
-  BackgroundProvider,
-} from '@context';
+import { PermissionContextProvider, ForeroundActivityProvider, BackgroundProvider } from '@context';
 import { ThemeConfig } from '@configs';
 import { useEffect } from 'react';
 
@@ -35,15 +29,11 @@ export default function RootLayout() {
   return (
     <BackgroundProvider>
       <PermissionContextProvider>
-        <AlbumsContextProvider>
-          <MusicContextProvider>
-            <ForeroundActivityProvider>
-              <NativeBaseProvider theme={ThemeConfig}>
-                <RootLayoutNav />
-              </NativeBaseProvider>
-            </ForeroundActivityProvider>
-          </MusicContextProvider>
-        </AlbumsContextProvider>
+        <ForeroundActivityProvider>
+          <NativeBaseProvider theme={ThemeConfig}>
+            <RootLayoutNav />
+          </NativeBaseProvider>
+        </ForeroundActivityProvider>
       </PermissionContextProvider>
     </BackgroundProvider>
   );

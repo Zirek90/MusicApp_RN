@@ -1,12 +1,10 @@
 import { SongStatus } from '@enums';
-import { withMusicContext } from '@hoc';
 import { Image } from 'native-base';
+import { useMusicStore } from 'src/store';
 
-interface MusicPlayerPlayingGifComponentProps {
-  songStatus: SongStatus;
-}
+export const MusicPlayerPlayingGif = () => {
+  const songStatus = useMusicStore(state => state.currentSong.songStatus);
 
-const MusicPlayerPlayingGifComponent = ({ songStatus }: MusicPlayerPlayingGifComponentProps) => {
   if (songStatus !== SongStatus.PLAY) {
     return;
   }
@@ -18,7 +16,3 @@ const MusicPlayerPlayingGifComponent = ({ songStatus }: MusicPlayerPlayingGifCom
     />
   );
 };
-
-export const MusicPlayerPlayingGif = withMusicContext(MusicPlayerPlayingGifComponent, {
-  songStatus: data => data.currentSong.songStatus,
-});

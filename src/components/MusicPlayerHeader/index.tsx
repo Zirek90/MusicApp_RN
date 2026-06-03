@@ -1,17 +1,12 @@
 import { useMemo } from 'react';
 import { Avatar, HStack, Text, VStack } from 'native-base';
 import { COLORS } from '@global';
-import { withMusicContext } from '@hoc';
 import { chooseAvatarImage } from '@utils';
+import { useMusicStore } from 'src/store';
 
-type MusicPlayerHeaderProps = {
-  songDetails: {
-    title: string;
-    album: string;
-  };
-};
-
-const MusicPlayerHeaderComponent = ({ songDetails }: MusicPlayerHeaderProps) => {
+export const MusicPlayerHeader = () => {
+  const songDetails = useMusicStore(state => state.songDetails);
+  console.log({ songDetails });
   const avatarImage = useMemo(() => chooseAvatarImage(), []);
 
   return (
@@ -29,7 +24,3 @@ const MusicPlayerHeaderComponent = ({ songDetails }: MusicPlayerHeaderProps) => 
     </HStack>
   );
 };
-
-export const MusicPlayerHeader = withMusicContext(MusicPlayerHeaderComponent, {
-  songDetails: data => data.songDetails,
-});

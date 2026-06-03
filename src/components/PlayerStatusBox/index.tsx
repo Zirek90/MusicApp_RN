@@ -1,15 +1,11 @@
 import { AnimatedBox, useSlideUpAndDownAnimation } from 'src/animationUtils';
-import { withMusicContext } from '@hoc';
-import { SongStatus } from '@enums';
 import { COLORS } from '@global';
 import { Text } from 'native-base';
+import { useMusicStore } from 'src/store';
 
-interface PlayerStatusBoxProps {
-  songStatus: SongStatus;
-  albumTitle: string;
-}
-
-export const PlayerStatusBoxComponent = ({ songStatus, albumTitle }: PlayerStatusBoxProps) => {
+export const PlayerStatusBox = () => {
+  const songStatus = useMusicStore(state => state.currentSong.songStatus);
+  const albumTitle = useMusicStore(state => state.songDetails.album);
   const height = useSlideUpAndDownAnimation({ status: songStatus });
 
   return (
@@ -24,8 +20,3 @@ export const PlayerStatusBoxComponent = ({ songStatus, albumTitle }: PlayerStatu
     </AnimatedBox>
   );
 };
-
-export const PlayerStatusBox = withMusicContext(PlayerStatusBoxComponent, {
-  songStatus: data => data.currentSong.songStatus,
-  albumTitle: data => data.songDetails.album,
-});

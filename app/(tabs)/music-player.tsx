@@ -9,7 +9,7 @@ import {
 import { COLORS } from '@global';
 import { Box } from 'native-base';
 
-const Player = () => {
+const MusicPlayer = () => {
   return (
     <BackgroundWrapper>
       <Box borderRadius={10} position="absolute" bottom={0} right={2} left={2}>
@@ -25,4 +25,4 @@ const Player = () => {
   );
 };
 
-export default Player;
+export default MusicPlayer;

@@ -1,28 +1,18 @@
 import { HStack } from 'native-base';
 import { SongStatus } from '@enums';
 import { COLORS } from '@global';
-import { withMusicContext } from '@hoc';
 import { PressableController } from '../PressableController';
+import { useMusicStore } from 'src/store';
 
-type PlayerControllersProps = {
-  handleResume: () => Promise<void>;
-  handlePause: () => Promise<void>;
-  handleLoop: () => Promise<void>;
-  handlePrevious: () => Promise<void>;
-  handleNext: () => Promise<void>;
-  songStatus: SongStatus | null;
-  isLooping: boolean;
-};
+export const PlayerControllers = () => {
+  const handleResume = useMusicStore(state => state.handleResume);
+  const handlePause = useMusicStore(state => state.handlePause);
+  const handleLoop = useMusicStore(state => state.handleLoop);
+  const handlePrevious = useMusicStore(state => state.handlePrevious);
+  const handleNext = useMusicStore(state => state.handleNext);
+  const songStatus = useMusicStore(state => state.currentSong.songStatus);
+  const isLooping = useMusicStore(state => state.currentSong.isLooping);
 
-const PlayerControllersComponent = ({
-  handleResume,
-  handlePause,
-  handleLoop,
-  handlePrevious,
-  handleNext,
-  songStatus,
-  isLooping,
-}: PlayerControllersProps) => {
   return (
     <HStack justifyContent="space-between" alignItems="center" px={1}>
       <HStack alignItems="center">
@@ -65,13 +55,3 @@ const PlayerControllersComponent = ({
     </HStack>
   );
 };
-
-export const PlayerControllers = withMusicContext(PlayerControllersComponent, {
-  handleResume: data => data.handleResume,
-  handlePause: data => data.handlePause,
-  handleLoop: data => data.handleLoop,
-  handlePrevious: data => data.handlePrevious,
-  handleNext: data => data.handleNext,
-  songStatus: data => data.currentSong.songStatus,
-  isLooping: data => data.currentSong.isLooping,
-});

@@ -2,35 +2,20 @@ import { HStack } from 'native-base';
 import { Asset } from 'expo-media-library';
 import { COLORS } from '@global';
 import { SongStatus } from '@enums';
-import { withMusicContext } from '@hoc';
 import { PressableController } from '../PressableController';
+import { useMusicStore } from 'src/store';
 
 type SongItemControllersProps = {
   data: Asset;
   index: number;
-  id: string;
-  songStatus: SongStatus | null;
-  handlePlay: (
-    songStatus: SongStatus,
-    id: string,
-    filename: string,
-    uri: string,
-    duration: number,
-    index: number,
-  ) => Promise<void>;
-  handleResume: () => Promise<void>;
-  handlePause: () => Promise<void>;
 };
 
-const SongItemControllersComponent = ({
-  handlePlay,
-  handleResume,
-  handlePause,
-  data,
-  index,
-  id,
-  songStatus,
-}: SongItemControllersProps) => {
+export const SongItemControllers = ({ data, index }: SongItemControllersProps) => {
+  const handlePlay = useMusicStore(state => state.handlePlay);
+  const handleResume = useMusicStore(state => state.handleResume);
+  const handlePause = useMusicStore(state => state.handlePause);
+  const id = useMusicStore(state => state.currentSong.id);
+  const songStatus = useMusicStore(state => state.currentSong.songStatus);
   const sameId = id === data.id;
   const isPauseActive = sameId && songStatus === SongStatus.PAUSE;
   const isPlayingActive = sameId && songStatus === SongStatus.PLAY;
@@ -66,11 +51,3 @@ const SongItemControllersComponent = ({
 
   return <HStack>{handleContent()}</HStack>;
 };
-
-export const SongItemControllers = withMusicContext(SongItemControllersComponent, {
-  handlePlay: data => data.handlePlay,
-  handleResume: data => data.handleResume,
-  handlePause: data => data.handlePause,
-  id: data => data.currentSong.id,
-  songStatus: data => data.currentSong.songStatus,
-});

@@ -2,10 +2,10 @@ import { useCallback } from 'react';
 import { Box, FlatList, Pressable, Text } from 'native-base';
 import { Album } from '@types';
 import { COLORS } from '@global';
-import { useAlbumsContext } from '@context';
+import { useAlbumStore } from 'src/store';
 
 export const AlbumTitles = () => {
-  const { albumList, activeAlbum, currentlyPlayedAlbum, handleActiveAlbum } = useAlbumsContext();
+  const { albumList, activeAlbum, currentlyPlayedAlbum, setActiveAlbum } = useAlbumStore();
   const albumSource = activeAlbum || currentlyPlayedAlbum;
 
   const renderAlbumItem = useCallback(
@@ -15,14 +15,14 @@ export const AlbumTitles = () => {
         <Pressable
           p={2}
           bgColor={isActive ? COLORS.white : 'transparent'}
-          onPress={() => handleActiveAlbum(item)}>
+          onPress={() => setActiveAlbum(item)}>
           <Text fontSize="sm" color={isActive ? COLORS.black : COLORS.white}>
             {item.album}
           </Text>
         </Pressable>
       );
     },
-    [albumSource, handleActiveAlbum],
+    [albumSource, setActiveAlbum],
   );
 
   const albumKeyExtractor = useCallback((item: Album) => item.album, []);
