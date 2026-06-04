@@ -1,11 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-  <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+  <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
   <uses-permission android:name="android.permission.VIBRATE"/>
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
   <queries>
     <intent>
       <action android:name="android.intent.action.VIEW"/>
@@ -13,21 +15,12 @@
       <data android:scheme="https"/>
     </intent>
   </queries>
-  <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="true" android:theme="@style/AppTheme" android:requestLegacyExternalStorage="true">
-    <meta-data android:name="com.supersami.foregroundservice.notification_channel_name" android:value="Sticky Title"/>
-    <meta-data android:name="com.supersami.foregroundservice.notification_channel_description" android:value="Sticky Description."/>
-    <meta-data android:name="com.supersami.foregroundservice.notification_color" android:resource="@color/blue"/>
-    <meta-data android:name="com.supersami.foregroundservice.notification_channel_description" android:value="Sticky Description."/>
-    <meta-data android:name="com.supersami.foregroundservice.notification_channel_name" android:value="Sticky Title"/>
-    <meta-data android:name="com.supersami.foregroundservice.notification_color" android:resource="@color/blue"/>
-    <meta-data android:name="expo.modules.updates.ENABLED" android:value="false"/>
+  <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="true" android:theme="@style/AppTheme" android:supportsRtl="true">
+    <meta-data android:name="expo.modules.updates.ENABLED" android:value="true"/>
     <meta-data android:name="expo.modules.updates.EXPO_RUNTIME_VERSION" android:value="@string/expo_runtime_version"/>
     <meta-data android:name="expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH" android:value="ALWAYS"/>
     <meta-data android:name="expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS" android:value="0"/>
-    <service android:name="com.supersami.foregroundservice.ForegroundService"/>
-    <service android:name="com.supersami.foregroundservice.ForegroundServiceTask"/>
-    <service android:name="com.supersami.foregroundservice.ForegroundService"/>
-    <service android:name="com.supersami.foregroundservice.ForegroundServiceTask"/>
+    <meta-data android:name="expo.modules.updates.EXPO_UPDATE_URL" android:value="https://u.expo.dev/1f49949d-bec6-49c6-961a-50b292a74fd4"/>
     <activity android:name=".MainActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|uiMode" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.App.SplashScreen" android:exported="true" android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -37,11 +30,10 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="music-player"/>
-        <data android:scheme="com.zirek.musicplayer"/>
-        <data android:scheme="exp+music-player"/>
+        <data android:scheme="myapp"/>
+        <data android:scheme="com.zirek.MusicPlayer"/>
+        <data android:scheme="exp+musicplayer"/>
       </intent-filter>
     </activity>
-    <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>
   </application>
 </manifest>

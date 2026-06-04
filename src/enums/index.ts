@@ -1,1 +1,1 @@
-export { SongStatus } from './song_status.enum';
+export * from './song-status.enum';

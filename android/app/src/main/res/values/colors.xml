@@ -1,11 +1,6 @@
-
-  <resources>
-    <item  name="blue"  type="color">#00C4D1
-    </item>
-    <integer-array  name="androidcolors">
-    <item>@color/blue</item>
-    </integer-array>
-    <color name="iconBackground">#161923</color>
-    <color name="colorPrimary">#39374e</color>
-    <color name="colorPrimaryDark">#161923</color>
-  </resources>
+<resources>
+  <color name="splashscreen_background">#050A18</color>
+  <color name="iconBackground">#050A18</color>
+  <color name="colorPrimary">#023c69</color>
+  <color name="colorPrimaryDark">#050A18</color>
+</resources>

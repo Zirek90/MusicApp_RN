@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android", "web"],
+  "apple": {
+    "modules": ["MusicForegroundServiceModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.musicforegroundservice.MusicForegroundServiceModule"]
+  }
+}

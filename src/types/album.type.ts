@@ -1,6 +1,12 @@
-import { Asset } from 'expo-media-library';
+import { Asset } from 'expo-media-library/legacy';
+import { ImageSourcePropType } from 'react-native';
 
 export type Album = {
-  album: string;
+  albumId?: string;
+  albumName: string;
+  albumAvatar?: {
+    url: ImageSourcePropType | undefined;
+    name: string;
+  };
   items: Asset[];
 };

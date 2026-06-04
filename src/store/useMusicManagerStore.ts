@@ -1,62 +1,93 @@
 import { create } from 'zustand';
 import { useAlbumStore } from './useAlbumStore';
+import { useMusicPlayerStore } from './useMusicPlayerStore';
 import { SongStatus } from '@enums';
-import { useMusicPlayerStore } from './useMusicStore';
+import { ForegroundServiceManager, StorageService } from '@service';
+import { Album, CurrentSong } from '@types';
 
-interface MusicManagerStore {
-  activeAlbum: string | null;
-  playSong: (albumName: string, songIndex: number) => void;
+export interface MusicManagerStore {
+  activeAlbumId: string | null;
+  restoreManagerState: () => void;
+  playSong: (albumId: Album['albumId'], songIndex: number) => void;
   nextSong: () => void;
   previousSong: () => void;
+  isFirst: boolean;
+  isLast: boolean;
 }
 
-export const useMusicManagerStore = create<MusicManagerStore>((set, get) => ({
-  activeAlbum: null,
+const getAlbumById = (albumId: Album['albumId']) =>
+  useAlbumStore.getState().albumList.find(album => album.albumId === albumId);
 
-  playSong: (albumName, songIndex) => {
-    const album = useAlbumStore.getState().albumList.find(a => a.album === albumName);
+const getActiveSong = () => useMusicPlayerStore.getState().currentSong;
+
+export const useMusicManagerStore = create<MusicManagerStore>((set, get) => ({
+  activeAlbumId: null,
+  isFirst: false,
+  isLast: false,
+
+  restoreManagerState: async () => {
+    const activeAlbumId = await StorageService.get('activeAlbumId');
+    if (activeAlbumId) {
+      set({ activeAlbumId });
+    }
+  },
+  playSong: async (albumId, songIndex) => {
+    const { nextSong } = get();
+    const album = getAlbumById(albumId);
     if (!album) return;
 
     const song = album.items[songIndex];
     if (!song) return;
 
-    useMusicPlayerStore.getState().handlePlay(
-      {
-        id: song.id,
-        filename: song.filename,
-        songStatus: SongStatus.PLAY,
-        duration: song.duration,
-        index: songIndex,
-      },
-      song.uri,
-    );
+    const currentSong: CurrentSong = {
+      id: song.id,
+      uri: song.uri,
+      filename: song.filename,
+      songStatus: SongStatus.PLAY,
+      duration: song.duration,
+      index: songIndex,
+      isPlaying: true,
+      albumName: album.albumName,
+    };
 
-    set({ activeAlbum: albumName });
+    useMusicPlayerStore.getState().handlePlay(currentSong, song.uri, nextSong);
+    set({
+      activeAlbumId: album.albumId,
+      isFirst: songIndex === 0,
+      isLast: songIndex === album.items.length - 1,
+    });
+
+    if (album.albumAvatar) {
+      ForegroundServiceManager.updateSongData(
+        song.filename,
+        album.albumName,
+        album.albumAvatar.name,
+      );
+    }
+    StorageService.set('activeAlbumId', album.albumId);
   },
-
   nextSong: () => {
-    const { activeAlbum, playSong } = get();
-    if (!activeAlbum) return;
+    const { playSong, activeAlbumId } = get();
+    if (!activeAlbumId) return;
 
-    const album = useAlbumStore.getState().albumList.find(a => a.album === activeAlbum);
+    const currentSong = getActiveSong();
+    if (!currentSong) return;
+
+    const album = getAlbumById(activeAlbumId);
     if (!album) return;
 
-    const currentIndex = useMusicPlayerStore.getState().currentSong?.index || 0;
-    const nextIndex = (currentIndex + 1) % album.items.length;
-
-    playSong(activeAlbum, nextIndex);
+    playSong(album.albumId, currentSong.index + 1);
   },
-
   previousSong: () => {
-    const { activeAlbum, playSong } = get();
-    if (!activeAlbum) return;
+    const { playSong, activeAlbumId } = get();
+    if (!activeAlbumId) return;
 
-    const album = useAlbumStore.getState().albumList.find(a => a.album === activeAlbum);
+    const currentSong = getActiveSong();
+    if (!currentSong) return;
+
+    const album = getAlbumById(activeAlbumId);
     if (!album) return;
 
-    const currentIndex = useMusicPlayerStore.getState().currentSong?.index || 0;
-    const prevIndex = currentIndex === 0 ? album.items.length - 1 : currentIndex - 1;
-
-    playSong(activeAlbum, prevIndex);
+    playSong(album.albumId, currentSong.index - 1);
   },
 }));

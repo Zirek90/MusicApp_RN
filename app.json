@@ -1,36 +1,49 @@
 {
   "expo": {
-    "name": "Music Player",
-    "slug": "music-player",
+    "name": "MusicPlayer",
+    "slug": "MusicPlayer",
     "version": "1.0.0",
+    "owner": "zirek",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "music-player",
+    "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "runtimeVersion": "1.0.0",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#141b24"
-    },
-    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.zirek.musicplayer"
+      "bundleIdentifier": "com.zirek.MusicPlayer"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#050A18"
       },
-      "package": "com.zirek.musicplayer",
-      "versionCode": 1
+      "package": "com.zirek.MusicPlayer",
+      "permissions": [
+        "FOREGROUND_SERVICE",
+        "FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+        "WAKE_LOCK",
+        "POST_NOTIFICATIONS",
+        "READ_MEDIA_AUDIO"
+      ],
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.SYSTEM_ALERT_WINDOW",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
     },
-    "web": {
-      "bundler": "metro",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": ["expo-build-properties", "expo-router", "expo-font"],
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "cover",
+          "backgroundColor": "#050A18"
+        }
+      ],
+      "expo-asset"
+    ],
     "experiments": {
       "typedRoutes": true
     },
@@ -39,9 +52,12 @@
         "origin": false
       },
       "eas": {
-        "projectId": "1eda6c98-df08-40de-9b77-163505411c7b"
+        "projectId": "1f49949d-bec6-49c6-961a-50b292a74fd4"
       }
     },
-    "owner": "zirek"
+    "runtimeVersion": "1.0.1",
+    "updates": {
+      "url": "https://u.expo.dev/1f49949d-bec6-49c6-961a-50b292a74fd4"
+    }
   }
 }

@@ -1,28 +1,62 @@
+import { useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
 import {
-  BackgroundWrapper,
-  MusicPlayerHeader,
-  MusicPlayerPlayingGif,
-  PlayerControllers,
-  PlayerStatusBox,
-  SongProgress,
+  MusicPlayerControllers,
+  MusicPlayerInfo,
+  MusicPlayerImage,
+  MusicPlayerSlider,
+  MusicPlayerDurationInfo,
+  GradientWrapper,
 } from '@components';
-import { COLORS } from '@global';
-import { Box } from 'native-base';
+import { useAlbumStore, useMusicManagerStore, useMusicPlayerStore } from '@store';
 
-const MusicPlayer = () => {
+function MusicPlayer() {
+  const { albumList } = useAlbumStore();
+
+  const nextSong = useMusicManagerStore(state => state.nextSong);
+  const previousSong = useMusicManagerStore(state => state.previousSong);
+  const isFirst = useMusicManagerStore(state => state.isFirst);
+  const isLast = useMusicManagerStore(state => state.isLast);
+  const activeAlbumId = useMusicManagerStore(state => state.activeAlbumId);
+
+  const currentSong = useMusicPlayerStore(state => state.currentSong);
+  const handlePause = useMusicPlayerStore(state => state.handlePause);
+  const handleResume = useMusicPlayerStore(state => state.handleResume);
+  const songProgress = useMusicPlayerStore(state => state.songProgress);
+  const seekTo = useMusicPlayerStore(state => state.seekTo);
+
+  const duration = currentSong?.duration ?? 0;
+  const avatar = useMemo(() => {
+    return albumList.find(item => item.albumId === activeAlbumId)?.albumAvatar?.url;
+  }, [activeAlbumId, albumList]);
+
   return (
-    <BackgroundWrapper>
-      <Box borderRadius={10} position="absolute" bottom={0} right={2} left={2}>
-        <MusicPlayerPlayingGif />
-        <PlayerStatusBox />
-        <Box bgColor={COLORS.background_primary} p={1}>
-          <MusicPlayerHeader />
-          <SongProgress />
-          <PlayerControllers />
-        </Box>
-      </Box>
-    </BackgroundWrapper>
+    <GradientWrapper>
+      <View style={styles.container}>
+        <MusicPlayerImage isPlaying={currentSong?.isPlaying || false} avatar={avatar!} />
+        <MusicPlayerInfo currentSong={currentSong} />
+        <MusicPlayerControllers
+          nextSong={nextSong}
+          previousSong={previousSong}
+          isFirst={isFirst}
+          isLast={isLast}
+          currentSong={currentSong}
+          handlePause={handlePause}
+          handleResume={handleResume}
+        />
+        <MusicPlayerSlider songProgress={songProgress} seekTo={seekTo} />
+        <MusicPlayerDurationInfo songProgress={songProgress} duration={duration} />
+      </View>
+    </GradientWrapper>
   );
-};
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default MusicPlayer;

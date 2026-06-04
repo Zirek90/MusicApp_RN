@@ -1,24 +1,29 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "lib": ["es6"],
-    "moduleResolution": "node",
-    "noEmit": true,
-    "strict": true,
     "target": "esnext",
-    "baseUrl": ".",
+    "module": "esnext",
+    "lib": ["esnext", "dom"],
+    "jsx": "react-native",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "skipLibCheck": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "types": ["jest"],
     "paths": {
       "@assets/*": ["./src/assets/*"],
       "@screens": ["./src/screens"],
       "@components": ["./src/components"],
       "@utils": ["./src/utils"],
-      "@hoc": ["./src/hoc"],
+      "@store": ["./src/store"],
       "@types": ["./src/types"],
       "@enums": ["./src/enums"],
       "@errors": ["./src/errors"],
@@ -30,5 +35,12 @@
     }
   },
   "exclude": ["node_modules", "babel.config.js"],
-  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "index.ts"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts",
+    "index.ts",
+    "__mocks__/expo-audio.js"
+  ]
 }

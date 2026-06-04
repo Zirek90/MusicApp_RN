@@ -1,33 +1,12 @@
 import { Redirect } from 'expo-router';
-import { LogBox } from 'react-native';
-import ReactNativeForegroundService from '@supersami/rn-foreground-service';
-import * as Updates from 'expo-updates';
-import { useEffect } from 'react';
-
-LogBox.ignoreLogs([
-  'In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.',
-]);
-
-ReactNativeForegroundService.register();
+import { GradientWrapper } from '@components';
 
 const App = () => {
-  useEffect(() => {
-    const onFetchUpdateAsync = async () => {
-      try {
-        const update = await Updates.checkForUpdateAsync();
-
-        if (update.isAvailable) {
-          await Updates.fetchUpdateAsync();
-          await Updates.reloadAsync();
-        }
-      } catch (error) {
-        alert(`Error fetching latest Expo update: ${error}`);
-      }
-    };
-    onFetchUpdateAsync();
-  }, []);
-
-  return <Redirect href="/(tabs)/album" />;
+  return (
+    <GradientWrapper>
+      <Redirect href="/(tabs)/album" />
+    </GradientWrapper>
+  );
 };
 
 export default App;

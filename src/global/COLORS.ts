@@ -3,11 +3,18 @@ export const COLORS = {
   black: '#000000',
   background_primary: 'rgba(35, 35, 35, 0.5)',
   background_secondary: '#0f0f0f',
-  background_content_primary: 'rgba(0, 0, 0, 0.4)',
-  background_content_secondary: 'rgba(0, 0, 0, 0.8)',
-  progress_bar_start: '#61ae5c',
-  progress_bar_end: '#195614',
-  inactive: '#ffffff',
-  active: '#3cff00',
-  hold: '#ff1100',
+  red: '#ff1100',
+  yellow_primary: '#f7ec36',
+  yellow_secondary: '#8f8d6b',
+  gray_primary: '#424242',
+  gray_secondary: '#b0b0b0',
+  green: '#22c55e',
+
+  gradient_background_primary: '#300522',
+  gradient_background_secondary: '#1a0533',
+
+  gradient_primary: '#1a237e',
+  gradient_secondary: '#3e125a',
+
+  black_transparent_primary: 'rgba(0, 0, 0, 0.8)',
 };

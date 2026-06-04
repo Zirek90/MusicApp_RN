@@ -1,14 +1,13 @@
-import { Audio, InterruptionModeIOS, InterruptionModeAndroid } from 'expo-av';
+import { AudioModule } from 'expo-audio';
 
 export const setupAudio = async () => {
   try {
-    await Audio.setAudioModeAsync({
-      allowsRecordingIOS: false,
-      interruptionModeIOS: InterruptionModeIOS.DoNotMix,
-      playsInSilentModeIOS: true,
-      staysActiveInBackground: true,
-      interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
-      shouldDuckAndroid: true,
+    await AudioModule.setAudioModeAsync({
+      playsInSilentMode: true,
+      shouldPlayInBackground: true,
+      interruptionMode: 'doNotMix',
+      interruptionModeAndroid: 'doNotMix',
+      shouldRouteThroughEarpiece: false,
     });
   } catch (error) {
     console.error('Error setting up audio:', error);
