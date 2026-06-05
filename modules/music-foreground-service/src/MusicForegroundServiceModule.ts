@@ -1,4 +1,4 @@
-import { NativeModule, requireNativeModule } from 'expo';
+import { NativeModule, requireOptionalNativeModule } from 'expo';
 import { MusicForegroundServiceModuleEvents } from './MusicForegroundService.types';
 
 declare class MusicForegroundServiceModule extends NativeModule<MusicForegroundServiceModuleEvents> {
@@ -6,5 +6,5 @@ declare class MusicForegroundServiceModule extends NativeModule<MusicForegroundS
   stopService(): string;
 }
 
-// This call loads the native module object from the JSI.
-export default requireNativeModule<MusicForegroundServiceModule>('MusicForegroundService');
+// Returns null on platforms/builds without the native module (e.g. iOS, Expo Go).
+export default requireOptionalNativeModule<MusicForegroundServiceModule>('MusicForegroundService');

@@ -6,17 +6,24 @@ import { COLORS } from '@global';
 
 type IconName = React.ComponentProps<typeof MaterialCommunityIcons>['name'];
 
+const EDGES = ['bottom', 'left', 'right'] as const;
+
 const SCREEN_OPTIONS = {
-  headerStyle: { backgroundColor: COLORS.background_secondary },
+  headerStyle: { backgroundColor: COLORS.black },
   headerTitleAlign: 'center',
   headerTintColor: COLORS.white,
+  tabBarActiveTintColor: COLORS.yellow_soft,
+  tabBarInactiveTintColor: COLORS.gray_secondary,
+  tabBarLabelStyle: { fontSize: 11, marginTop: 2 },
   tabBarStyle: {
     position: 'absolute',
     backgroundColor: COLORS.black_transparent_primary,
     marginHorizontal: 10,
     marginBottom: 5,
     borderRadius: 20,
-    height: 60,
+    height: 68,
+    paddingTop: 6,
+    paddingBottom: 12,
     borderTopWidth: 0,
     elevation: 15,
     shadowColor: COLORS.black,
@@ -46,8 +53,8 @@ const SETTINGS_OPTIONS = { title: 'Settings', tabBarIcon: SettingsTabIcon };
 
 function InitialPage() {
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor={COLORS.background_secondary} />
+    <SafeAreaView style={styles.container} edges={EDGES}>
+      <StatusBar barStyle="light-content" backgroundColor={COLORS.black} />
 
       <Tabs screenOptions={SCREEN_OPTIONS}>
         <Tabs.Screen name="album" options={ALBUM_OPTIONS} />
@@ -65,5 +72,6 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: COLORS.black,
   },
 });

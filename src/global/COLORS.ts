@@ -6,6 +6,7 @@ export const COLORS = {
   red: '#ff1100',
   yellow_primary: '#f7ec36',
   yellow_secondary: '#8f8d6b',
+  yellow_soft: '#e9dd6b',
   gray_primary: '#424242',
   gray_secondary: '#b0b0b0',
   green: '#22c55e',

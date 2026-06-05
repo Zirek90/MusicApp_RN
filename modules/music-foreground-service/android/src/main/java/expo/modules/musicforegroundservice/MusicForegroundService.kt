@@ -1,5 +1,6 @@
 package expo.modules.musicforegroundservice
 
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
@@ -19,23 +20,18 @@ class MusicForegroundService : Service() {
   private val channel_id = "music_channel_id"
     override fun onCreate() {
         super.onCreate()
-        try {
-          createNotificationChannel()
-          val notification = createNotification("Music Player", "No song playing", "avatar_1.png")
-
-          startForeground(1, notification)
-        } catch (e: Exception) {
-          Log.e("MusicForegroundService", "Error starting foreground service", e)
-        }
+        createNotificationChannel()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-      val title = intent?.getStringExtra("title")
-      val content = intent?.getStringExtra("content")
-      val imageName = intent?.getStringExtra("imageName") ?: "avatar_1.png" 
+      val title = intent?.getStringExtra("title") ?: "Music Player"
+      val content = intent?.getStringExtra("content") ?: "No song playing"
+      val imageName = intent?.getStringExtra("imageName") ?: "avatar_1.png"
 
-      if (title != null && content != null) {
-          updateNotification(title, content, imageName)
+      try {
+        startForeground(1, createNotification(title, content, imageName))
+      } catch (e: Exception) {
+        Log.e("MusicForegroundService", "Error starting foreground service", e)
       }
 
       return START_STICKY
@@ -53,24 +49,28 @@ class MusicForegroundService : Service() {
   }
 
     private fun createNotification(title: String, content: String,  imageName: String): android.app.Notification {
-      Log.e("MusicForegroundService", "Service started")
       val iconResId = getBitmapFromAssets(imageName)
+
+      val launchIntent = packageManager.getLaunchIntentForPackage(packageName)?.apply {
+        flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+      }
+      val contentIntent = PendingIntent.getActivity(
+        this,
+        0,
+        launchIntent,
+        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+      )
 
       return NotificationCompat.Builder(this, channel_id)
           .setContentTitle(title)
           .setContentText(content)
-          .setSmallIcon(android.R.drawable.ic_notification_overlay) // TODO figure out how to import drawable from main android
+          .setSmallIcon(applicationInfo.icon)
           .setLargeIcon(iconResId)
+          .setContentIntent(contentIntent)
           .setPriority(NotificationCompat.PRIORITY_HIGH)
-          .setVibrate(longArrayOf(0)) 
-          .setDefaults(Notification.DEFAULT_SOUND) 
+          .setVibrate(longArrayOf(0))
+          .setDefaults(Notification.DEFAULT_SOUND)
           .build()
-    }
-
-    private fun updateNotification(title: String, content: String, imageName: String) {
-      val notification = createNotification(title, content, imageName)
-      val notificationManager = getSystemService(NotificationManager::class.java)
-      notificationManager?.notify(1, notification)
     }
 
     private fun createNotificationChannel() {

@@ -35,12 +35,5 @@
     }
   },
   "exclude": ["node_modules", "babel.config.js"],
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "index.ts",
-    "__mocks__/expo-audio.js"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "index.ts"]
 }

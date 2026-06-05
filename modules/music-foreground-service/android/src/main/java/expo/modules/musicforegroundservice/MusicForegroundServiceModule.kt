@@ -11,12 +11,12 @@ class MusicForegroundServiceModule : Module() {
 
     Function("startService") {  title: String, content: String, imageName: String ->
       val context = appContext.reactContext ?: return@Function Unit
-      var intent = Intent(context, MusicForegroundService::class.java).apply {
+      val intent = Intent(context, MusicForegroundService::class.java).apply {
         putExtra("title", title)
         putExtra("content", content)
         putExtra("imageName", imageName)
     }
-      context.startService(intent) 
+      context.startForegroundService(intent)
       Unit
     }
 

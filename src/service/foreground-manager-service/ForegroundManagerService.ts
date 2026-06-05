@@ -13,19 +13,19 @@ class ForegroundManager {
   }
 
   private handleAppStateChange = async (nextAppState: string) => {
+    if (!MusicForegroundServiceModule) return;
+
     if (nextAppState === 'background' && this.isPlaying && !this.isServiceRunning) {
-      console.log('[ForegroundServiceManager] App in background, starting service...');
       MusicForegroundServiceModule.startService(this.songName, this.albumName, this.avatarName);
       this.isServiceRunning = true;
     } else if (nextAppState === 'active' && this.isServiceRunning) {
-      console.log('[ForegroundServiceManager] App back in foreground, stopping service...');
       MusicForegroundServiceModule.stopService();
       this.isServiceRunning = false;
     }
   };
 
   stopService = async () => {
-    if (this.isServiceRunning) {
+    if (MusicForegroundServiceModule && this.isServiceRunning) {
       MusicForegroundServiceModule.stopService();
       this.isServiceRunning = false;
     }
@@ -39,6 +39,10 @@ class ForegroundManager {
     this.songName = title;
     this.albumName = content;
     this.avatarName = avatarName;
+
+    if (MusicForegroundServiceModule && this.isServiceRunning) {
+      MusicForegroundServiceModule.startService(title, content, avatarName);
+    }
   }
 }
 
